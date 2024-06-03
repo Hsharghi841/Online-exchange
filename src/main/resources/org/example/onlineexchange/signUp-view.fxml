@@ -41,19 +41,19 @@
                   </Label>
                   <HBox spacing="20.0">
                      <children>
-                        <TextField focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="First name" />
-                        <TextField focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="Last name" />
+                        <TextField fx:id="firstNameTxf" focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="First name" />
+                        <TextField fx:id="lastNameTxf" focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="Last name" />
                      </children>
                   </HBox>
-                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Phone number" />
-                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Email">
+                  <TextField fx:id="phoneNumberTxf" focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Phone number" />
+                  <TextField fx:id="emailTxf" focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Email">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Username" />
-                  <PasswordField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="password" />
-                  <PasswordField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Repeat password" />
+                  <TextField fx:id="usernameTxf" focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Username" />
+                  <PasswordField fx:id="passwordTxf" focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="password" />
+                  <PasswordField fx:id="repeatPasswordTxf" focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Repeat password" />
                   <VBox style="-fx-border-color: aqua;">
                      <children>
                         <ImageView fx:id="captchaImageView" fitHeight="30.0" fitWidth="150.0" onMouseClicked="#captchaMouseClicked" pickOnBounds="true" preserveRatio="true">
