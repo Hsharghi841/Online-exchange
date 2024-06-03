@@ -17,7 +17,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="gard" pickOnBounds="true" preserveRatio="true">
+            <ImageView pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../gradient.png" />
                </image>
@@ -26,21 +26,34 @@
       </HBox>
       <VBox alignment="CENTER" fillWidth="false" layoutX="164.0" layoutY="73.0" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox fx:id="loginVb" alignment="TOP_CENTER" fillWidth="false" prefHeight="457.0" prefWidth="300.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+            <VBox fx:id="loginVb" alignment="TOP_CENTER" fillWidth="false" prefWidth="300.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 20;">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label blendMode="SRC_ATOP" text="Login">
+                  <Label blendMode="SRC_ATOP" text="Sign up">
                      <font>
                         <Font name="Freeman Regular" size="37.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="50.0" top="50.0" />
+                        <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField focusTraversable="false" prefWidth="210.0" promptText="username" />
-                  <PasswordField focusTraversable="false" prefWidth="210.0" promptText="password" />
+                  <HBox spacing="20.0">
+                     <children>
+                        <TextField focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="First name" />
+                        <TextField focusTraversable="false" prefHeight="26.0" prefWidth="100.0" promptText="Last name" />
+                     </children>
+                  </HBox>
+                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Phone number" />
+                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Email">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Username" />
+                  <PasswordField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="password" />
+                  <PasswordField focusTraversable="false" prefHeight="26.0" prefWidth="220.0" promptText="Repeat password" />
                   <VBox style="-fx-border-color: aqua;">
                      <children>
                         <ImageView fx:id="captchaImageView" fitHeight="30.0" fitWidth="150.0" onMouseClicked="#captchaMouseClicked" pickOnBounds="true" preserveRatio="true">
@@ -55,28 +68,15 @@
                   </VBox>
                   <Label fx:id="errLbl" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" />
                   <TextField fx:id="captchaTxf" focusTraversable="false" prefHeight="26.0" prefWidth="150.0" promptText="captcha" />
-                  <Button fx:id="loginBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginBtnHandler" prefHeight="26.0" prefWidth="210.0" style="-fx-background-radius: 3; -fx-background-image: url('/login-button-gradient.png');" text="Login" textAlignment="CENTER">
+                  <Button fx:id="signupBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signUpBtnHandler" prefHeight="26.0" prefWidth="210.0" style="-fx-background-radius: 3; -fx-background-image: url('/login-button-gradient.png');" text="Sign Up" textAlignment="CENTER">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <HBox alignment="CENTER" prefHeight="18.0" prefWidth="183.0">
                      <children>
-                        <Label opacity="0.8" text="Forget" />
-                        <Label text=" Password?" textFill="#3e00ff">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="18.0" prefWidth="183.0">
-                     <children>
-                        <Label opacity="0.8" text="Dont have an account? " />
-                        <Label onMouseClicked="#signUpLblHandler" text="Sing up" textFill="#3e00ff">
+                        <Label opacity="0.8" text="Do you have an account? " />
+                        <Label onMouseClicked="#loginLblHandler" text="Login" textFill="#3e00ff">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
