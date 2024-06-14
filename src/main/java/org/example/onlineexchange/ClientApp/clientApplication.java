@@ -1,4 +1,4 @@
-package org.example.onlineexchange;
+package org.example.onlineexchange.ClientApp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +8,10 @@ import java.io.IOException;
 
 
 
-public class HelloApplication extends Application {
+public class clientApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(clientApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("");
         stage.setScene(scene);
