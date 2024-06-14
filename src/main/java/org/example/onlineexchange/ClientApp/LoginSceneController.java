@@ -134,7 +134,7 @@ public class LoginSceneController implements Initializable {
 
         cl.send("[LOGIN]," + usernameTxf.getText() + "," + passwordTxf.getText());
 
-        currentUser = User.getFromSocket(cl);
+//        currentUser = User.getFromSocket(cl);
 
 
         System.out.println("hi " + currentUser.getFirstName());// this part is for forward app to user panel

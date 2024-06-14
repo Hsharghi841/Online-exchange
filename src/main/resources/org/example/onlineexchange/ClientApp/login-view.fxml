@@ -19,7 +19,7 @@
          <children>
             <ImageView fx:id="gard" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../gradient.png" />
+                  <Image url="@../../../../gradient.png" />
                </image>
             </ImageView>
          </children>
