@@ -9,19 +9,6 @@ public class EmailSender {
     private final String senderUsername;
     private final String senderPassword;
 
-    public static void main(String[] args) {
-
-        EmailSender emailSender = new EmailSender("online.exchange.project@gmail.com",
-                "pnixokhcnqrixqmp");
-        try {
-            emailSender.send("سلام", "خوبی؟", "hadisharghi84@gmail.com");
-            System.out.println("success!");
-        } catch (MessagingException e) {
-            System.err.println("ERROR");
-        }
-
-    }
-
     public EmailSender(String senderUsername, String senderPassword){
         // اطلاعات جیمیل
         this.senderUsername = senderUsername;
