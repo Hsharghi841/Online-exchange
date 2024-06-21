@@ -1,4 +1,4 @@
-package org.example.onlineexchange;
+package org.example.onlineexchange.Server;
 
 
 import java.io.IOException;

@@ -1,10 +1,10 @@
 package org.example.onlineexchange;
 
 import org.example.onlineexchange.Exceptions.*;
+import org.example.onlineexchange.Server.Database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class User {
 
