@@ -29,8 +29,6 @@ public class ClientSocket {
 
         scanner = new Scanner(socket.getInputStream());
         printer = new Formatter(socket.getOutputStream());
-
-
     }
 
     public static ClientSocket getClientSocket (int port, String IP) throws IOException {
@@ -56,15 +54,11 @@ public class ClientSocket {
 
     public void send(String mail){
         printer.format(mail);
+        printer.flush();
     }
 
     public String receive(){
-        return scanner.next();
+        return scanner.nextLine();
     }
-
-
-
-
-
 
 }

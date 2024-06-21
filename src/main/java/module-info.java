@@ -2,6 +2,8 @@ module org.example.onlineexchange {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.mail;
+    requires mysql.connector.j;
+    requires java.sql;
 
 
     opens org.example.onlineexchange to javafx.fxml;

@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.onlineexchange.EmailSender;
+import org.example.onlineexchange.Request;
 import org.example.onlineexchange.User;
 
 
@@ -151,11 +152,32 @@ public class LoginSceneController implements Initializable {
             printErr("passwords not mach");
         }
 
+        User current = null;
         try {
-            new User(firstNameTxf.getText(), lastNameTxf.getText(), phoneNumberTxf.getText(),
+            current = new User(firstNameTxf.getText(), lastNameTxf.getText(), phoneNumberTxf.getText(),
                     emailTxf.getText(), usernameTxf.getText(), passwordTxf.getText());
         }catch (RuntimeException e1){
             printErr(e1.getMessage());
+            return;
+        }
+
+        ClientSocket clientSk = null;
+        try {
+            clientSk = ClientSocket.getClientSocket();
+        } catch (IOException ex) {
+            printErr("connection failed");
+            return;
+        }
+
+        clientSk.send(new Request("SIGN IN",
+                current.getFirstName(), current.getLastName(),
+                current.getPhoneNumber(), current.getEmail(),
+                current.getUsername(), current.getPassword()).toString());
+
+        Request r = new Request(clientSk.receive());
+
+        if(Objects.equals(r.getCommand(), "FAILED")){
+            printErr("failed");
             return;
         }
 
@@ -201,12 +223,12 @@ public class LoginSceneController implements Initializable {
         if(email[0].trim().matches("[a-zA-z\\.0-9_-]+@[a-zA-Z0-9]+\\.[a-z]+")){
             User currentUser = null;
 
-            for (User user : User.allUsers){
-                if(Objects.equals(user.getEmail(), email[0])){
-                    currentUser = user;
-                    break;
-                }
-            }
+//            for (User user : User.allUsers){
+//                if(Objects.equals(user.getEmail(), email[0])){
+//                    currentUser = user;
+//                    break;
+//                }
+//            }
             if(currentUser == null){
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setHeaderText("email not found");
