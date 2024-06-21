@@ -1,12 +1,17 @@
 package org.example.onlineexchange.Server;
 
+import javafx.scene.control.Alert;
+import org.example.onlineexchange.EmailSender;
+import org.example.onlineexchange.Exceptions.EmailNotFoundException;
 import org.example.onlineexchange.Exceptions.UserNameNotFoundException;
 import org.example.onlineexchange.Request;
 import org.example.onlineexchange.User;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Formatter;
 import java.util.NoSuchElementException;
@@ -20,6 +25,9 @@ public class ClientHandler implements Runnable{
     private final Server server;
 
     private User loginedUser;
+
+    private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
+    private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrixqmp";
 
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -86,6 +94,42 @@ public class ClientHandler implements Runnable{
                 continue;
             }
 
+            if(Objects.equals(request.getCommand(), "FORGET PASSWORD")){
+
+                try {
+
+                    User currentUser = User.getUserFromDatabaseByEmail(request.getParameter(0));
+
+                    EmailSender emailSender = new EmailSender(OPERATOR_EMAIL, OPERATOR_EMAIL_PASSWORD);
+                    emailSender.send("Your Requested Password",
+                            STR."""                
+                                    Dear""" + ' ' + currentUser.getUsername() + '\n' +
+                                    """
+                                                                                
+                                            We received a request to send you the password for your account associated with this email address. Please find your password below:
+                                                                        
+                                            Password:""" + ' ' + currentUser.getPassword() + '\n' +
+                                    """                     
+                                                                                
+                                            For security reasons, we recommend that you keep your password confidential and do not share it with anyone. If you have any concerns about the security of your account, please consider changing your password.
+                                                                        
+                                            If you have any questions or need further assistance, please do not hesitate to contact us.
+                                                                        
+                                            Best regards,
+                                            Support Team
+                                            """, currentUser.getEmail()
+                    );
+
+                    sender.format(new Request("SUCCESS").toString());
+                }catch (EmailNotFoundException e){
+                    sender.format(new Request("EMAIL NOT FOUND").toString());
+                } catch (SQLException | MessagingException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+                continue;
+            }
+
 
         }
 
@@ -100,7 +144,7 @@ public class ClientHandler implements Runnable{
     }
 
     private static class Printer {
-        Formatter formatter;
+        private Formatter formatter;
         public Printer(OutputStream o){
             formatter = new Formatter(o);
         }

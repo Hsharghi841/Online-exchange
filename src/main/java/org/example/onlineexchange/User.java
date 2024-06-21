@@ -117,4 +117,18 @@ public class User {
         return result;
     }
 
+    public static User getUserFromDatabaseByEmail(String email) throws SQLException {
+        ResultSet r = db.getStatement().executeQuery(STR."SELECT * FROM users WHERE email = '\{email}'");
+        if(!r.next())throw new EmailNotFoundException();
+        User result = new User();
+        result.id = r.getInt("id");
+        result.firstName = r.getString("firstName");
+        result.lastName = r.getString("lastName");
+        result.phoneNumber = r.getString("phoneNumber");
+        result.email = r.getString("email");
+        result.username = r.getString("username");
+        result.password = r.getString("password");
+        return result;
+    }
+
 }
