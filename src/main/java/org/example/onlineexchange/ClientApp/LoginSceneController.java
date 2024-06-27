@@ -104,8 +104,6 @@ public class LoginSceneController implements Initializable {
             return;
         }
 
-        User currentUser = null;
-
 //        for(User user : User.allUsers){
 //            if(Objects.equals(user.getUsername(), usernameTxf.getText())){
 //                currentUser = user;
@@ -132,12 +130,29 @@ public class LoginSceneController implements Initializable {
             return;
         }
 
-        cl.send("[LOGIN]," + usernameTxf.getText() + "," + passwordTxf.getText());
+        cl.send(new Request("LOGIN", usernameTxf.getText(), passwordTxf.getText()).toString());
 
-//        currentUser = User.getFromSocket(cl);
+        Request r = Request.requestProcessor(cl.receive());
+
+        if(Objects.equals(r.getCommand(), "FAILED")){
+            printErr("a problem has happened. try again");
+            return;
+        }
+
+        if(Objects.equals(r.getCommand(), "USER NOT FOUND")){
+            printErr("This username is not registered");
+            return;
+        }
+
+        if(Objects.equals(r.getCommand(), "PASSWORD NOT MATCH")){
+            printErr("password is incorrect");
+            return;
+        }
+
+        if(!Objects.equals(r.getCommand(), "SUCCESS"))return;
 
 
-        System.out.println("hi " + currentUser.getFirstName());// this part is for forward app to user panel
+        System.out.println(STR."hi \{usernameTxf.getText()}");// this part is for forward app to user panel
     }
 
     @FXML

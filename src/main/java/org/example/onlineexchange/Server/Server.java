@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Server {
 
@@ -38,9 +39,19 @@ public class Server {
             }
 
             System.out.println("a client accepted!");
-            new Thread(clientHandler).start();
 
-            clients.add(clientHandler);
+            int i;
+            for (i = 0;i < clients.size(); i++) {
+                if(!Objects.equals(clients.get(i).name, STR."client \{i + 1}")){
+                    break;
+                }
+            }
+            clients.add(i, clientHandler);
+            clientHandler.name = STR."client \{clients.indexOf(clientHandler) + 1}";
+            System.out.println(STR."this client named : '\{clientHandler.name}'");
+            System.out.println("=====================================");
+
+            new Thread(clientHandler).start();
         }
     }
 

@@ -19,6 +19,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable{
+    public String name;
+
     private final Socket socket;
     private final Printer sender;
     private final Scanner receiver;
@@ -45,7 +47,7 @@ public class ClientHandler implements Runnable{
             }catch (NoSuchElementException e){
                 break;
             }
-            System.out.println("a msg received");
+            System.out.println(STR."a msg received from : '\{name}'");
 
             if(Objects.equals(request.getCommand(), "DISCONNECT")){
                 break;
@@ -129,8 +131,6 @@ public class ClientHandler implements Runnable{
                 }
                 continue;
             }
-
-
         }
 
         sender.close();
@@ -140,11 +140,12 @@ public class ClientHandler implements Runnable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(STR."'\{name}' disconnected");
         server.clients.remove(this);
     }
 
     private static class Printer {
-        private Formatter formatter;
+        private final Formatter formatter;
         public Printer(OutputStream o){
             formatter = new Formatter(o);
         }
