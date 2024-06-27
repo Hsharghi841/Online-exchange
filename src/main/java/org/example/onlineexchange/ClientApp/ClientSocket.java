@@ -16,7 +16,7 @@ public class ClientSocket {
     private final int port;
     private final String IP;
 
-    private final Socket socket;
+    private static Socket socket ;
 
     private final Scanner scanner;
     private final Formatter printer;
@@ -62,9 +62,7 @@ public class ClientSocket {
         return scanner.next();
     }
 
-
-
-
-
-
+    public static Socket getSocket() {
+        return socket;
+    }
 }
