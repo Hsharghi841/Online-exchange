@@ -1,5 +1,6 @@
 package org.example.onlineexchange;
 
+import org.example.onlineexchange.Coins.Coin;
 import org.example.onlineexchange.Exceptions.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class User {
     private String email;
     private String username;
     private String password;
+    private Coin coins[] = new Coin[5], temp;
 
     public static final ArrayList<User> allUsers = new ArrayList<User>();
 

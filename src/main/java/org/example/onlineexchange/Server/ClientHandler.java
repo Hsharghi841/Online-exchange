@@ -1,5 +1,8 @@
 package org.example.onlineexchange.Server;
 
+import org.example.onlineexchange.Coins.*;
+import org.example.onlineexchange.User;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Formatter;
@@ -11,12 +14,17 @@ public class ClientHandler implements Runnable {
 
     Scanner scanner;
     Formatter formatter;
-
+    private Coin coins[] = new Coin[5], temp;
 
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         scanner = new Scanner(socket.getInputStream());
         formatter = new Formatter(socket.getOutputStream());
+        coins[0] = new USD();
+        coins[1] = new EUR();
+        coins[2] = new TOMAN();
+        coins[3] = new YEN();
+        coins[4] = new GBP();
     }
 
     @Override

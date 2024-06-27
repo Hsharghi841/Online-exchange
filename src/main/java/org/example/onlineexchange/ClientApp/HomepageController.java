@@ -19,7 +19,9 @@ public class HomepageController implements Initializable {
     private final Scanner scanner;
     private final Formatter printer;
 
-    private String input;
+    private boolean updated = false;
+
+    private String input, output;
     private String[] orders;
     private Coin coins[] = new Coin[5], temp;
     private int numcoinselection;
@@ -85,6 +87,16 @@ public class HomepageController implements Initializable {
             @Override
             public void run() {
                 while (true) {
+                    if (!updated) {
+                        updated=true;
+                        try {
+                            sleep(100);
+                        } catch (InterruptedException e) {
+                            System.out.println("cant sleep");
+                        }
+                        output = "[UPDATE]";
+                        printer.format(output + "\n");
+                    }
                     input = scanner.nextLine();
                     orders = input.split(",");
                     if (orders[0].equals("[PRICECHENGE]")) {
@@ -107,6 +119,7 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPPRICE.setText(orders[2]);
                         }
+                        updated=false;
                     } else if (orders[0].equals("[MAXPRICECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
@@ -127,6 +140,7 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPMAXPRICE.setText(orders[2]);
                         }
+                        updated=false;
                     } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
@@ -147,7 +161,8 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPPERCENT.setText(orders[2]);
                         }
-                    }else if (orders[0].equals("[MINPRICECHENGE]")) {
+                        updated=false;
+                    } else if (orders[0].equals("[MINPRICECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
                                 temp = coins[i];
@@ -167,6 +182,7 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPMINPRICE.setText(orders[2]);
                         }
+                        updated=false;
                     }
                 }
             }
