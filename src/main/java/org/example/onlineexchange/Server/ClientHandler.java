@@ -39,9 +39,6 @@ public class ClientHandler implements Runnable{
     private boolean updated[] = {false, false, false, false, false};
 
 
-    private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
-    private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrix";
-
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
