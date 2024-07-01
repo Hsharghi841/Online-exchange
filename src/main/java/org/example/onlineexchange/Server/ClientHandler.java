@@ -39,9 +39,6 @@ public class ClientHandler implements Runnable{
     private boolean updated[] = {false, false, false, false, false};
 
 
-    private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
-    private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrix";
-
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
@@ -152,42 +149,46 @@ public class ClientHandler implements Runnable{
                 continue;
             }
 
-            if (orders[0].equals("[UPDATED]")) {
+
+            if (orders[0].equals("[UPDATE]")) {
+                System.out.println("ok");
                 for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
                     if (!updated[i]) {
                         for (int j = 0; j < 4; ) {
                             if (j == 0) {
                                 if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
-                                    sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                    sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()) + '\n');
+                                    System.out.println("ok sent");
                                 } else {
-                                    sender.format("[PRICECHENGEUPDATED]");
+                                    sender.format("[PRICECHENGEUPDATED]" + '\n');
+                                    System.out.println("ok sent");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
                                 j = orders[1].indexOf(2) + 48;
                             } else if (j == 1) {
                                 if (server.getCoins()[i].getMaxprice() != coins[i].getMaxprice()) {
-                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice()));
+                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice()) + '\n');
                                 } else {
-                                    sender.format("[MAXPRICECHENGEUPDATED]");
+                                    sender.format("[MAXPRICECHENGEUPDATED] + '\n'");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
                                 j = orders[1].indexOf(2) + 48;
                             } else if (j == 2) {
                                 if (server.getCoins()[i].getPercentchenge() != coins[i].getPercentchenge()) {
-                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge()));
+                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge()) + '\n');
                                 } else {
-                                    sender.format("[PERCENTCHENGECHENGEUPDATED]");
+                                    sender.format("[PERCENTCHENGECHENGEUPDATED]" + '\n');
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
                                 j = orders[1].indexOf(2) + 48;
                             } else if (j == 3) {
                                 if (server.getCoins()[i].getMinprice() != coins[i].getMinprice()) {
-                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice()));
+                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice()) + '\n');
                                 } else {
-                                    sender.format("[MINPRICECHENGEUPDATED]");
+                                    sender.format("[MINPRICECHENGEUPDATED]" + '\n');
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");

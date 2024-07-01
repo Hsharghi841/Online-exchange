@@ -85,11 +85,11 @@ public class Server {
                     }
                 }
                 orders=input.split(",");
-                coins[0].setPrice1(Double.valueOf(orders[2]));
-                coins[0].setMaxprice(Double.valueOf(orders[2]));
-                coins[0].setMinprice(Double.valueOf(orders[2]));
+                coins[0].setPrice1(Double.parseDouble(orders[2]));
+                coins[0].setMaxprice(Double.parseDouble(orders[2]));
+                coins[0].setMinprice(Double.parseDouble(orders[2]));
                 coins[0].setPercentchenge(0.0);
-                coins[1].setPrice1(Double.valueOf(orders[3]));
+                coins[1].setPrice1(Double.parseDouble(orders[3]));
                 coins[1].setMaxprice(Double.valueOf(orders[3]));
                 coins[1].setMinprice(Double.valueOf(orders[3]));
                 coins[1].setPercentchenge(0.0);

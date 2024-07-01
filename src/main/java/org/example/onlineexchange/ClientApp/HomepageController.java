@@ -80,8 +80,8 @@ public class HomepageController implements Initializable {
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-        new Thread(() -> {
-            while (true) {
+//        new Thread(() -> {
+//            while (true) {
                 System.out.println("123");
                 if (!updated) {
                     numofresive=0;
@@ -198,7 +198,7 @@ public class HomepageController implements Initializable {
                 }
                 if(numofresive==20)
                     updated=false;
-            }
-        }).start();
+//            }
+//        }).start();
     }
 }
