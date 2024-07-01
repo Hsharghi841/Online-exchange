@@ -1,5 +1,6 @@
 package org.example.onlineexchange.Server;
 
+import org.example.onlineexchange.Coins.*;
 import javafx.scene.control.Alert;
 import org.example.onlineexchange.EmailSender;
 import org.example.onlineexchange.Exceptions.EmailNotFoundException;
@@ -30,21 +31,40 @@ public class ClientHandler implements Runnable{
 
     private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
     private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrixqmp";
+    private String input, output;
+    private String[] orders;
+    Scanner scanner;
+    Formatter formatter;
+    private Coin coins[] = new Coin[5];
+    private boolean updated[] = {false, false, false, false, false};
+
+
+    private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
+    private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrix";
 
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
         sender = new Printer(socket.getOutputStream());
         receiver = new Scanner(socket.getInputStream());
+        scanner = new Scanner(socket.getInputStream());
+        formatter = new Formatter(socket.getOutputStream());
+        coins[0] = new USD();
+        coins[1] = new EUR();
+        coins[2] = new TOMAN();
+        coins[3] = new YEN();
+        coins[4] = new GBP();
     }
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             Request request;
             try {
-                request = Request.requestProcessor(receiver.nextLine());
-            }catch (NoSuchElementException e){
+                input = receiver.nextLine();
+                orders = input.split(",");
+                request = Request.requestProcessor(input);
+            } catch (NoSuchElementException e) {
                 break;
             }
             System.out.println(STR."a msg received from : '\{name}'");
@@ -131,6 +151,54 @@ public class ClientHandler implements Runnable{
                 }
                 continue;
             }
+
+            if (orders[0].equals("[UPDATED]")) {
+                for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
+                    if (!updated[i]) {
+                        for (int j = 0; j < 4; ) {
+                            if (j == 0) {
+                                if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
+                                    sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                } else {
+                                    sender.format("[PRICECHENGEUPDATED]");
+                                }
+                                input = receiver.nextLine();
+                                orders = input.split(",");
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 1) {
+                                if (server.getCoins()[i].getMaxprice() != coins[i].getMaxprice()) {
+                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice()));
+                                } else {
+                                    sender.format("[MAXPRICECHENGEUPDATED]");
+                                }
+                                input = receiver.nextLine();
+                                orders = input.split(",");
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 2) {
+                                if (server.getCoins()[i].getPercentchenge() != coins[i].getPercentchenge()) {
+                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge()));
+                                } else {
+                                    sender.format("[PERCENTCHENGECHENGEUPDATED]");
+                                }
+                                input = receiver.nextLine();
+                                orders = input.split(",");
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 3) {
+                                if (server.getCoins()[i].getMinprice() != coins[i].getMinprice()) {
+                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice()));
+                                } else {
+                                    sender.format("[MINPRICECHENGEUPDATED]");
+                                }
+                                input = receiver.nextLine();
+                                orders = input.split(",");
+                                j = orders[1].indexOf(2) + 48;
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+
         }
 
         sender.close();

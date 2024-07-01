@@ -1,5 +1,6 @@
 package org.example.onlineexchange;
 
+import org.example.onlineexchange.Coins.Coin;
 import org.example.onlineexchange.Exceptions.*;
 import org.example.onlineexchange.Server.Database;
 
@@ -15,6 +16,7 @@ public class User {
     private String email;
     private String username;
     private String password;
+    private Coin coins[] = new Coin[5], temp;
 
     private static final Database db = Database.getDataBase();
 
