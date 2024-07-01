@@ -3,6 +3,7 @@ package org.example.onlineexchange.ClientApp;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Formatter;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -58,8 +59,17 @@ public class ClientSocket {
         printer.format(mail);
     }
 
-    public String receive(){
-        return scanner.next();
+    public String receive() {
+        try {
+            return scanner.nextLine();
+        }catch (NoSuchElementException e){
+            try {
+                cl = new ClientSocket(port, IP);
+            } catch (IOException ex) {
+                throw new RuntimeException("cant reconnect to server");
+            }
+            return cl.receive();
+        }
     }
 
     public static Socket getSocket() {

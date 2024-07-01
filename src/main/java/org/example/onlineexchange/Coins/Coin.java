@@ -1,8 +1,11 @@
 package org.example.onlineexchange.Coins;
 
+import java.util.ArrayList;
+
 public class Coin {
     protected String name;
-    protected double price, maxprice, minprice,percentchenge;
+    protected double price, maxprice, minprice,percentchenge,pastprice=0;
+    protected ArrayList<Double> prices =new ArrayList<>();
 
     public String getName() {
         return name;
@@ -17,6 +20,7 @@ public class Coin {
     }
 
     public void setPrice(double price) {
+        setPastprice(this.price);
         this.price = price;
     }
 
@@ -42,5 +46,17 @@ public class Coin {
 
     public void setPercentchenge(double percentchenge) {
         this.percentchenge = percentchenge;
+    }
+
+    public double getPastprice() {
+        return pastprice;
+    }
+
+    public void setPastprice(double pastprice) {
+        this.pastprice = pastprice;
+    }
+    public void setPrice1(double price) {
+        pastprice=price;
+        this.price = price;
     }
 }

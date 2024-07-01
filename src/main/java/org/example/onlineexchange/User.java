@@ -2,11 +2,14 @@ package org.example.onlineexchange;
 
 import org.example.onlineexchange.Coins.Coin;
 import org.example.onlineexchange.Exceptions.*;
+import org.example.onlineexchange.Server.Database;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class User {
 
+    private int id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -15,7 +18,7 @@ public class User {
     private String password;
     private Coin coins[] = new Coin[5], temp;
 
-    public static final ArrayList<User> allUsers = new ArrayList<User>();
+    private static final Database db = Database.getDataBase();
 
     public User(String firstName, String lastName, String phoneNumber, String email, String username, String password) {
         setFirstName(firstName);
@@ -24,8 +27,9 @@ public class User {
         setEmail(email);
         setUsername(username);
         setPassword(password);
-        allUsers.add(this);
     }
+
+    private User(){};
 
     public void setFirstName(String firstName) {
         if(!firstName.trim().matches("[a-z ]+"))throw new FirstNameException();
@@ -51,9 +55,13 @@ public class User {
 
     public void setUsername(String username) {
         if(!username.trim().matches("[a-zA-z0-9\\.]+"))throw new UserNameException();
-        for (User user : allUsers){
-            if(username.equals(user.getUsername()))throw new UserNameTakenException();
+        try {
+            ResultSet r = db.getStatement().executeQuery(STR."SELECT username FROM users WHERE username = '\{username}'");
+            if(r.next())throw new UserNameTakenException();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
         this.username = username;
     }
 
@@ -85,4 +93,44 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return STR."User [id=\{id}, firstName='\{firstName}\{'\''}, lastName='\{lastName}\{'\''}, phoneNumber='\{phoneNumber}\{'\''}, email='\{email}\{'\''}, username='\{username}\{'\''}, password='\{password}\{'\''}\{']'}";
+    }
+
+    public static void addUserToDatabase(User user) throws SQLException {
+        db.getStatement().execute(
+                "INSERT INTO users (firstName, lastName, phoneNumber, email, username, password)" +
+                STR."VALUES ('\{user.firstName}', '\{user.lastName}', '\{user.phoneNumber}', '\{user.email}', '\{user.username}', '\{user.password}')");
+    }
+
+    public static User getUserFromDatabase(String username) throws SQLException {
+        ResultSet r = db.getStatement().executeQuery(STR."SELECT * FROM users WHERE username = '\{username}'");
+        if(!r.next())throw new UserNameNotFoundException();
+        User result = new User();
+        result.id = r.getInt("id");
+        result.firstName = r.getString("firstName");
+        result.lastName = r.getString("lastName");
+        result.phoneNumber = r.getString("phoneNumber");
+        result.email = r.getString("email");
+        result.username = r.getString("username");
+        result.password = r.getString("password");
+        return result;
+    }
+
+    public static User getUserFromDatabaseByEmail(String email) throws SQLException {
+        ResultSet r = db.getStatement().executeQuery(STR."SELECT * FROM users WHERE email = '\{email}'");
+        if(!r.next())throw new EmailNotFoundException();
+        User result = new User();
+        result.id = r.getInt("id");
+        result.firstName = r.getString("firstName");
+        result.lastName = r.getString("lastName");
+        result.phoneNumber = r.getString("phoneNumber");
+        result.email = r.getString("email");
+        result.username = r.getString("username");
+        result.password = r.getString("password");
+        return result;
+    }
+
 }

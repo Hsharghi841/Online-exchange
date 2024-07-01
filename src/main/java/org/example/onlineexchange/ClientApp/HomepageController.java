@@ -14,13 +14,12 @@ import java.util.Scanner;
 
 public class HomepageController implements Initializable {
 
-    private Socket socket = ClientSocket.getSocket();
+    private ClientSocket socket = ClientSocket.getClientSocket();
 
-    private final Scanner scanner;
-    private final Formatter printer;
 
     private boolean updated = false;
 
+    private int numofresive=0;
     private String input, output;
     private String[] orders;
     private Coin coins[] = new Coin[5], temp;
@@ -66,19 +65,13 @@ public class HomepageController implements Initializable {
     @FXML
     Label GBPMINPRICE;
 
-    {
-        try {
-            scanner = new Scanner(socket.getInputStream());
-            printer = new Formatter(socket.getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public HomepageController() throws IOException {
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        coins[0] = new USD();
+        /*coins[0] = new USD();
         coins[1] = new EUR();
         coins[2] = new TOMAN();
         coins[3] = new YEN();
@@ -88,16 +81,17 @@ public class HomepageController implements Initializable {
             public void run() {
                 while (true) {
                     if (!updated) {
-                        updated=true;
+                        numofresive=0;
+                        updated = true;
                         try {
-                            sleep(100);
+                            sleep(1000);
                         } catch (InterruptedException e) {
                             System.out.println("cant sleep");
                         }
                         output = "[UPDATE]";
-                        printer.format(output + "\n");
+                        socket.send(output + "\n");
                     }
-                    input = scanner.nextLine();
+                    input = socket.receive();
                     orders = input.split(",");
                     if (orders[0].equals("[PRICECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
@@ -119,7 +113,11 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPPRICE.setText(orders[2]);
                         }
-                        updated=false;
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[1]");
+                    } else if (orders[0].equals("[PRICECHENGEUPDATED]")) {
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[1]");
                     } else if (orders[0].equals("[MAXPRICECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
@@ -140,7 +138,11 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPMAXPRICE.setText(orders[2]);
                         }
-                        updated=false;
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[2]");
+                    } else if (orders[0].equals("[MAXPRICECHENGEUPDATED]")) {
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[2]");
                     } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
@@ -161,7 +163,11 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPPERCENT.setText(orders[2]);
                         }
-                        updated=false;
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[3]");
+                    } else if (orders[0].equals("[PERCENTCHENGECHENGEUPDATED]")) {
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[3]");
                     } else if (orders[0].equals("[MINPRICECHENGE]")) {
                         for (int i = 0; i < coins.length; i++) {
                             if (orders[1].equals(coins[i].getName())) {
@@ -182,10 +188,15 @@ public class HomepageController implements Initializable {
                         } else if (numcoinselection == 4) {
                             GBPMINPRICE.setText(orders[2]);
                         }
-                        updated=false;
+                        socket.send("[SUCCSFUL],[4]");
+                    } else if (orders[0].equals("[MINPRICECHENGEUPDATED]")) {
+                        numofresive++;
+                        socket.send("[SUCCSFUL],[4]");
                     }
+                    if(numofresive==20)
+                        updated=false;
                 }
             }
-        }.start();
+        }.start();*/
     }
 }

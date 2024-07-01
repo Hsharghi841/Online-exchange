@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.onlineexchange.EmailSender;
+import org.example.onlineexchange.Request;
 import org.example.onlineexchange.User;
 
 
@@ -32,8 +33,7 @@ import java.util.ResourceBundle;
 
 public class LoginSceneController implements Initializable {
 
-    private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
-    private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrixqmp";
+
     @FXML
     Button loginBtn;
     @FXML
@@ -104,8 +104,6 @@ public class LoginSceneController implements Initializable {
             return;
         }
 
-        User currentUser = null;
-
 //        for(User user : User.allUsers){
 //            if(Objects.equals(user.getUsername(), usernameTxf.getText())){
 //                currentUser = user;
@@ -132,12 +130,29 @@ public class LoginSceneController implements Initializable {
             return;
         }
 
-        cl.send("[LOGIN]," + usernameTxf.getText() + "," + passwordTxf.getText());
+        cl.send(new Request("LOGIN", usernameTxf.getText(), passwordTxf.getText()).toString());
 
-//        currentUser = User.getFromSocket(cl);
+        Request r = Request.requestProcessor(cl.receive());
+
+        if(Objects.equals(r.getCommand(), "FAILED")){
+            printErr("a problem has happened. try again");
+            return;
+        }
+
+        if(Objects.equals(r.getCommand(), "USER NOT FOUND")){
+            printErr("This username is not registered");
+            return;
+        }
+
+        if(Objects.equals(r.getCommand(), "PASSWORD NOT MATCH")){
+            printErr("password is incorrect");
+            return;
+        }
+
+        if(!Objects.equals(r.getCommand(), "SUCCESS"))return;
 
 
-        System.out.println("hi " + currentUser.getFirstName());// this part is for forward app to user panel
+        System.out.println(STR."hi \{usernameTxf.getText()}");// this part is for forward app to user panel
     }
 
     @FXML
@@ -151,11 +166,32 @@ public class LoginSceneController implements Initializable {
             printErr("passwords not mach");
         }
 
+        User current = null;
         try {
-            new User(firstNameTxf.getText(), lastNameTxf.getText(), phoneNumberTxf.getText(),
+            current = new User(firstNameTxf.getText(), lastNameTxf.getText(), phoneNumberTxf.getText(),
                     emailTxf.getText(), usernameTxf.getText(), passwordTxf.getText());
         }catch (RuntimeException e1){
             printErr(e1.getMessage());
+            return;
+        }
+
+        ClientSocket clientSk = null;
+        try {
+            clientSk = ClientSocket.getClientSocket();
+        } catch (IOException ex) {
+            printErr("connection failed");
+            return;
+        }
+
+        clientSk.send(new Request("SIGN IN",
+                current.getFirstName(), current.getLastName(),
+                current.getPhoneNumber(), current.getEmail(),
+                current.getUsername(), current.getPassword()).toString());
+
+        Request r = new Request(clientSk.receive());
+
+        if(Objects.equals(r.getCommand(), "FAILED")){
+            printErr("failed");
             return;
         }
 
@@ -199,52 +235,42 @@ public class LoginSceneController implements Initializable {
         dialog.showAndWait().ifPresent(s -> email[0] = s);
 
         if(email[0].trim().matches("[a-zA-z\\.0-9_-]+@[a-zA-Z0-9]+\\.[a-z]+")){
-            User currentUser = null;
-
-            for (User user : User.allUsers){
-                if(Objects.equals(user.getEmail(), email[0])){
-                    currentUser = user;
-                    break;
-                }
+            ClientSocket cs;
+            try {
+                cs = ClientSocket.getClientSocket();
+            } catch (IOException ex) {
+                Alert err = new Alert(Alert.AlertType.ERROR);
+                err.setHeaderText("connection failed");
+                err.showAndWait();
+                return;
             }
-            if(currentUser == null){
+
+            cs.send(new Request("FORGET PASSWORD", email[0]).toString());
+
+            Request result = Request.requestProcessor(cs.receive());
+
+            if(Objects.equals(result.getCommand(), "EMAIL NOT FOUND")) {
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setHeaderText("email not found");
                 err.showAndWait();
                 return;
             }
 
-            EmailSender emailSender = new EmailSender(OPERATOR_EMAIL, OPERATOR_EMAIL_PASSWORD);
-            try {
-                emailSender.send("Your Requested Password",
-                        """                
-                                Dear""" + ' ' + currentUser.getUsername() + '\n' +
-                                """
-                                
-                                We received a request to send you the password for your account associated with this email address. Please find your password below:
-                                                            
-                                Password:""" + ' ' + currentUser.getPassword() + '\n' +
-                                """                     
-                                
-                                For security reasons, we recommend that you keep your password confidential and do not share it with anyone. If you have any concerns about the security of your account, please consider changing your password.
-                                                            
-                                If you have any questions or need further assistance, please do not hesitate to contact us.
-                                                            
-                                Best regards,
-                                Support Team
-                                """, currentUser.getEmail());
+            if(Objects.equals(result.getCommand(), "SUCCESS")){
                 Alert info = new Alert(Alert.AlertType.INFORMATION);
                 info.setHeaderText("We have sent you an email containing your username and password");
                 info.showAndWait();
                 return;
+            }
 
-
-            } catch (MessagingException ex) {
+            if(Objects.equals(result.getCommand(), "FAILED")){
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setHeaderText("There is a Problem, try again");
                 err.showAndWait();
                 return;
             }
+
+
         }
 
         Alert err = new Alert(Alert.AlertType.ERROR);
