@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler implements Runnable {
     public String name;
 
     private final Socket socket;
@@ -29,13 +29,14 @@ public class ClientHandler implements Runnable{
     private String[] orders;
     Scanner scanner;
     Formatter formatter;
-    private Coin coins[] = new Coin[5], temp;
+    private Coin coins[] = new Coin[5];
     private User loginedUser;
-    private boolean updated[]={false,false,false,false,false};
+    private boolean updated[] = {false, false, false, false, false};
 
 
     private static final String OPERATOR_EMAIL = "online.exchange.project@gmail.com";
     private static final String OPERATOR_EMAIL_PASSWORD = "pnixokhcnqrix";
+
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
@@ -48,21 +49,22 @@ public class ClientHandler implements Runnable{
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-}
+    }
+
     @Override
     public void run() {
-        while (true){
+        while (true) {
             Request request;
             try {
                 input = receiver.nextLine();
                 orders = input.split(",");
                 request = Request.requestProcessor(input);
-            }catch (NoSuchElementException e){
+            } catch (NoSuchElementException e) {
                 break;
             }
             System.out.println(STR."a msg received from : '\{name}'");
 
-            if(Objects.equals(request.getCommand(), "DISCONNECT")){
+            if (Objects.equals(request.getCommand(), "DISCONNECT")) {
                 break;
             }
 
@@ -75,28 +77,28 @@ public class ClientHandler implements Runnable{
                             STR."sql exception in logining of \{request.getParameter(0)} \{request.getParameter(1)}");
                     sender.format(new Request("FAILED").toString());
                     continue;
-                }catch (UserNameNotFoundException e){
+                } catch (UserNameNotFoundException e) {
                     sender.format(new Request("USER NOT FOUND").toString());
                     continue;
                 }
 
-                if(Objects.equals(requestedUser.getPassword(), request.getParameter(1))){
+                if (Objects.equals(requestedUser.getPassword(), request.getParameter(1))) {
                     loginedUser = requestedUser;
                     System.out.println(STR."\{loginedUser.getFirstName()} \{loginedUser.getLastName()} logined");
                     sender.format(new Request("SUCCESS").toString());
-                }else {
+                } else {
                     sender.format(new Request("PASSWORD NOT MATCH").toString());
                 }
                 continue;
             }
 
-            if(Objects.equals(request.getCommand(), "SIGN IN")){
+            if (Objects.equals(request.getCommand(), "SIGN IN")) {
                 try {
                     User.addUserToDatabase(new User(
                             request.getParameter(0), request.getParameter(1),
-                            request.getParameter(2),request.getParameter(3),
-                            request.getParameter(4),request.getParameter(5)
-                            ));
+                            request.getParameter(2), request.getParameter(3),
+                            request.getParameter(4), request.getParameter(5)
+                    ));
                     sender.format(new Request("SUCCESS").toString());
                 } catch (SQLException e) {
                     System.err.println(
@@ -109,7 +111,7 @@ public class ClientHandler implements Runnable{
                 continue;
             }
 
-            if(Objects.equals(request.getCommand(), "FORGET PASSWORD")){
+            if (Objects.equals(request.getCommand(), "FORGET PASSWORD")) {
 
                 try {
 
@@ -136,7 +138,7 @@ public class ClientHandler implements Runnable{
                     );
 
                     sender.format(new Request("SUCCESS").toString());
-                }catch (EmailNotFoundException e){
+                } catch (EmailNotFoundException e) {
                     sender.format(new Request("EMAIL NOT FOUND").toString());
                 } catch (SQLException | MessagingException e) {
                     sender.format(new Request("FAILED").toString());
@@ -144,51 +146,54 @@ public class ClientHandler implements Runnable{
                 }
                 continue;
             }
-            if(orders[0].equals("[UPDATED]")){
-                for (int i = 0;!updated[0]||!updated[1]||!updated[2]||!updated[3]||!updated[4]; i++) {
-                    if(!updated[i]){
+
+            if (orders[0].equals("[UPDATED]")) {
+                for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
+                    if (!updated[i]) {
                         for (int j = 0; j < 4; ) {
-                            if(j==0){
-                                if(server.getCoins()[i].getPrice()!=coins[i].getPrice()){
-                                    sender.format("[PRICECHENGE]"+coins[i].getName()+String.valueOf(coins[i].getPrice()));
-                                }else{
+                            if (j == 0) {
+                                if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
+                                    sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                } else {
                                     sender.format("[PRICECHENGEUPDATED]");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
-                                j=orders[1].indexOf(2)+48;
-                            } else if (j==1) {
-                                if(server.getCoins()[i].getMaxprice()!=coins[i].getMaxprice()){
-                                    sender.format("[MAXPRICECHENGE]"+coins[i].getName()+String.valueOf(coins[i].getMaxprice()));
-                                }else{
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 1) {
+                                if (server.getCoins()[i].getMaxprice() != coins[i].getMaxprice()) {
+                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice()));
+                                } else {
                                     sender.format("[MAXPRICECHENGEUPDATED]");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
-                                j=orders[1].indexOf(2)+48;
-                            }else if (j==2) {
-                                if(server.getCoins()[i].getPercentchenge()!=coins[i].getPercentchenge()){
-                                    sender.format("[PERCENTCHENGECHENGE]"+coins[i].getName()+String.valueOf(coins[i].getPercentchenge()));
-                                }else{
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 2) {
+                                if (server.getCoins()[i].getPercentchenge() != coins[i].getPercentchenge()) {
+                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge()));
+                                } else {
                                     sender.format("[PERCENTCHENGECHENGEUPDATED]");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
-                                j=orders[1].indexOf(2)+48;
-                            }else if (j==3) {
-                                if(server.getCoins()[i].getMinprice()!=coins[i].getMinprice()){
-                                    sender.format("[MINPRICECHENGE]"+coins[i].getName()+String.valueOf(coins[i].getMinprice()));
-                                }else{
+                                j = orders[1].indexOf(2) + 48;
+                            } else if (j == 3) {
+                                if (server.getCoins()[i].getMinprice() != coins[i].getMinprice()) {
+                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice()));
+                                } else {
                                     sender.format("[MINPRICECHENGEUPDATED]");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
-                                j=orders[1].indexOf(2)+48;
+                                j = orders[1].indexOf(2) + 48;
                             }
                         }
                     }
                 }
+                continue;
             }
+
         }
 
         sender.close();
@@ -204,13 +209,16 @@ public class ClientHandler implements Runnable{
 
     private static class Printer {
         private final Formatter formatter;
-        public Printer(OutputStream o){
+
+        public Printer(OutputStream o) {
             formatter = new Formatter(o);
         }
-        public void format(String format){
+
+        public void format(String format) {
             formatter.format(format);
             formatter.flush();
         }
+
         public void close() {
             formatter.close();
         }

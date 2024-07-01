@@ -30,43 +30,40 @@ public class Server {
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    Socket clientSk;
-                    try {
-                        clientSk = serverSocket.accept();
-                    } catch (IOException e) {
-                        System.err.println("Server socket accepting error. tying again ...");
-                        continue;
-                    }
-
-                    ClientHandler clientHandler;
-                    try {
-                        clientHandler = new ClientHandler(clientSk, server);
-                    } catch (IOException e) {
-                        System.err.println("client socket error. tying again ...");
-                        continue;
-                    }
-
-                    System.out.println("a client accepted!");
-
-                    int i;
-                    for (i = 0; i < clients.size(); i++) {
-                        if (!Objects.equals(clients.get(i).name, STR."client \{i + 1}")) {
-                            break;
-                        }
-                    }
-                    clients.add(i, clientHandler);
-                    clientHandler.name = STR."client \{clients.indexOf(clientHandler) + 1}";
-                    System.out.println(STR."this client named : '\{clientHandler.name}'");
-                    System.out.println("=====================================");
-
-                    new Thread(clientHandler).start();
+        new Thread(() -> {
+            while (true) {
+                Socket clientSk;
+                try {
+                    clientSk = serverSocket.accept();
+                } catch (IOException e) {
+                    System.err.println("Server socket accepting error. tying again ...");
+                    continue;
                 }
+
+                ClientHandler clientHandler;
+                try {
+                    clientHandler = new ClientHandler(clientSk, server);
+                } catch (IOException e) {
+                    System.err.println("client socket error. tying again ...");
+                    continue;
+                }
+
+                System.out.println("a client accepted!");
+
+                int i;
+                for (i = 0; i < clients.size(); i++) {
+                    if (!Objects.equals(clients.get(i).name, STR."client \{i + 1}")) {
+                        break;
+                    }
+                }
+                clients.add(i, clientHandler);
+                clientHandler.name = STR."client \{clients.indexOf(clientHandler) + 1}";
+                System.out.println(STR."this client named : '\{clientHandler.name}'");
+                System.out.println("=====================================");
+
+                new Thread(clientHandler).start();
             }
-        }.start();
+        }).start();
         new Thread(){
             private String input;
             private String[] orders;
@@ -74,7 +71,7 @@ public class Server {
             @Override
             public void run() {
                 try {
-                    read = new BufferedReader(new FileReader("currency_prices (3).csv"));
+                    read = new BufferedReader(new FileReader("src/main/java/org/example/onlineexchange/Server/currency_prices.csv"));
                 } catch (FileNotFoundException e) {
                     System.out.println("please restart the server(cant open csv file)!");
                 }
@@ -112,12 +109,11 @@ public class Server {
                     System.out.println("cant sleep in server");
                 }
                 for (int j = 0; j <1440; j++){
-                    for (int i = 0; i < 2; i++) {
-                        try {
-                            input = read.readLine();
-                        } catch (IOException e) {
-                            System.out.println("cant read");
-                        }
+                    try {
+                        input = read.readLine();
+                        input = read.readLine();
+                    } catch (IOException e) {
+                        System.out.println("cant read");
                     }
                     orders=input.split(",");
                     coins[0].setPrice(Double.valueOf(orders[2]));
