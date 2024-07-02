@@ -1,9 +1,16 @@
 package org.example.onlineexchange.ClientApp;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
+import javafx.util.Duration;
 import org.example.onlineexchange.Coins.*;
 
 import java.io.IOException;
@@ -12,11 +19,14 @@ import java.net.URL;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class HomepageController implements Initializable {
 
     private ClientSocket socket;
+    private Socket socket1;
 
+    private Scanner scanner;
 
     private boolean updated = false;
 
@@ -81,128 +91,129 @@ public class HomepageController implements Initializable {
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    System.out.println("123");
-                    if (!updated) {
-                        numofresive = 0;
-                        updated = true;
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            System.out.println("cant sleep");
-                        }
-                        output = "[UPDATE]";
-                        socket.send(output + "\n");
-                    }
-                    input = socket.receive();
-                    orders = input.split(",");
-                    if (orders[0].equals("[PRICECHENGE]")) {
-                        for (int i = 0; i < coins.length; i++) {
-                            if (orders[1].equals(coins[i].getName())) {
-                                temp = coins[i];
-                                numcoinselection = i;
-                                break;
-                            }
-                        }
-                        temp.setPrice(Double.valueOf(orders[2]));
-                        if (numcoinselection == 0) {
-                            USDPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 1) {
-                            EURPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 2) {
-                            TOMANPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 3) {
-                            YENPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 4) {
-                            GBPPRICE.setText(orders[2]);
-                        }
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[1]"+"\n");
-                    } else if (orders[0].equals("[PRICECHENGEUPDATED]")) {
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[1]"+"\n");
-                    } else if (orders[0].equals("[MAXPRICECHENGE]")) {
-                        for (int i = 0; i < coins.length; i++) {
-                            if (orders[1].equals(coins[i].getName())) {
-                                temp = coins[i];
-                                numcoinselection = i;
-                                break;
-                            }
-                        }
-                        temp.setMaxprice(Double.valueOf(orders[2]));
-                        if (numcoinselection == 0) {
-                            USDMAXPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 1) {
-                            EURMAXPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 2) {
-                            TOMANMAXPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 3) {
-                            YENMAXPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 4) {
-                            GBPMAXPRICE.setText(orders[2]);
-                        }
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[2]"+"\n");
-                    } else if (orders[0].equals("[MAXPRICECHENGEUPDATED]")) {
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[2]"+"\n");
-                    } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
-                        for (int i = 0; i < coins.length; i++) {
-                            if (orders[1].equals(coins[i].getName())) {
-                                temp = coins[i];
-                                numcoinselection = i;
-                                break;
-                            }
-                        }
-                        temp.setPercentchenge(Double.valueOf(orders[2]));
-                        if (numcoinselection == 0) {
-                            USDPERCENT.setText(orders[2]);
-                        } else if (numcoinselection == 1) {
-                            EURPERCENT.setText(orders[2]);
-                        } else if (numcoinselection == 2) {
-                            TOMANPERCENT.setText(orders[2]);
-                        } else if (numcoinselection == 3) {
-                            YENPERCENT.setText(orders[2]);
-                        } else if (numcoinselection == 4) {
-                            GBPPERCENT.setText(orders[2]);
-                        }
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[3]"+"\n");
-                    } else if (orders[0].equals("[PERCENTCHENGECHENGEUPDATED]")) {
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[3]"+"\n");
-                    } else if (orders[0].equals("[MINPRICECHENGE]")) {
-                        for (int i = 0; i < coins.length; i++) {
-                            if (orders[1].equals(coins[i].getName())) {
-                                temp = coins[i];
-                                numcoinselection = i;
-                                break;
-                            }
-                        }
-                        temp.setMinprice(Double.valueOf(orders[2]));
-                        if (numcoinselection == 0) {
-                            USDMINPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 1) {
-                            EURMINPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 2) {
-                            TOMANMINPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 3) {
-                            YENMINPRICE.setText(orders[2]);
-                        } else if (numcoinselection == 4) {
-                            GBPMINPRICE.setText(orders[2]);
-                        }
-                        socket.send("[SUCCSFUL],[4]"+"\n");
-                    } else if (orders[0].equals("[MINPRICECHENGEUPDATED]")) {
-                        numofresive++;
-                        socket.send("[SUCCSFUL],[4]"+"\n");
-                    }
-                    if (numofresive == 20)
-                        updated = false;
-                }
+        Timeline timeline =new Timeline(new KeyFrame(Duration.seconds(1),event -> UpDate()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+    public void UpDate(){
+        while (true) {
+            System.out.println("123");
+            if (!updated) {
+                numofresive = 0;
+                updated = true;
+                output = "[UPDATE]";
+                socket.send(output + "\n");
+                System.out.println("123");
             }
-        });
+            input = scanner.nextLine() ;
+            System.out.println("1234");
+            orders = input.split(",");
+            if (orders[0].equals("[PRICECHENGE]")) {
+                for (int i = 0; i < coins.length; i++) {
+                    if (orders[1].equals(coins[i].getName())) {
+                        temp = coins[i];
+                        numcoinselection = i;
+                        break;
+                    }
+                }
+                temp.setPrice(Double.valueOf(orders[2]));
+                if (numcoinselection == 0) {
+                    USDPRICE.setText(orders[2]);
+                } else if (numcoinselection == 1) {
+                    EURPRICE.setText(orders[2]);
+                } else if (numcoinselection == 2) {
+                    TOMANPRICE.setText(orders[2]);
+                } else if (numcoinselection == 3) {
+                    YENPRICE.setText(orders[2]);
+                } else if (numcoinselection == 4) {
+                    GBPPRICE.setText(orders[2]);
+                }
+                numofresive++;
+                System.out.println("123");
+                socket.send("[SUCCSFUL],[1]" + "\n");
+            } else if (orders[0].equals("[PRICECHENGEUPDATED]")) {
+                numofresive++;
+                socket.send("[SUCCSFUL],[1]" + "\n");
+            } else if (orders[0].equals("[MAXPRICECHENGE]")) {
+                for (int i = 0; i < coins.length; i++) {
+                    if (orders[1].equals(coins[i].getName())) {
+                        temp = coins[i];
+                        numcoinselection = i;
+                        break;
+                    }
+                }
+                temp.setMaxprice(Double.valueOf(orders[2]));
+                if (numcoinselection == 0) {
+                    USDMAXPRICE.setText(orders[2]);
+                } else if (numcoinselection == 1) {
+                    EURMAXPRICE.setText(orders[2]);
+                } else if (numcoinselection == 2) {
+                    TOMANMAXPRICE.setText(orders[2]);
+                } else if (numcoinselection == 3) {
+                    YENMAXPRICE.setText(orders[2]);
+                } else if (numcoinselection == 4) {
+                    GBPMAXPRICE.setText(orders[2]);
+                }
+                numofresive++;
+                socket.send("[SUCCSFUL],[2]" + "\n");
+            } else if (orders[0].equals("[MAXPRICECHENGEUPDATED]")) {
+                numofresive++;
+                socket.send("[SUCCSFUL],[2]" + "\n");
+            } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
+                for (int i = 0; i < coins.length; i++) {
+                    if (orders[1].equals(coins[i].getName())) {
+                        temp = coins[i];
+                        numcoinselection = i;
+                        break;
+                    }
+                }
+                temp.setPercentchenge(Double.valueOf(orders[2]));
+                if (numcoinselection == 0) {
+                    USDPERCENT.setText(orders[2]);
+                } else if (numcoinselection == 1) {
+                    EURPERCENT.setText(orders[2]);
+                } else if (numcoinselection == 2) {
+                    TOMANPERCENT.setText(orders[2]);
+                } else if (numcoinselection == 3) {
+                    YENPERCENT.setText(orders[2]);
+                } else if (numcoinselection == 4) {
+                    GBPPERCENT.setText(orders[2]);
+                }
+                numofresive++;
+                socket.send("[SUCCSFUL],[3]" + "\n");
+            } else if (orders[0].equals("[PERCENTCHENGECHENGEUPDATED]")) {
+                numofresive++;
+                socket.send("[SUCCSFUL],[3]" + "\n");
+            } else if (orders[0].equals("[MINPRICECHENGE]")) {
+                for (int i = 0; i < coins.length; i++) {
+                    if (orders[1].equals(coins[i].getName())) {
+                        temp = coins[i];
+                        numcoinselection = i;
+                        break;
+                    }
+                }
+                temp.setMinprice(Double.valueOf(orders[2]));
+                if (numcoinselection == 0) {
+                    USDMINPRICE.setText(orders[2]);
+                } else if (numcoinselection == 1) {
+                    EURMINPRICE.setText(orders[2]);
+                } else if (numcoinselection == 2) {
+                    TOMANMINPRICE.setText(orders[2]);
+                } else if (numcoinselection == 3) {
+                    YENMINPRICE.setText(orders[2]);
+                } else if (numcoinselection == 4) {
+                    GBPMINPRICE.setText(orders[2]);
+                }
+                socket.send("[SUCCSFUL],[4]" + "\n");
+            } else if (orders[0].equals("[MINPRICECHENGEUPDATED]")) {
+                numofresive++;
+                socket.send("[SUCCSFUL],[4]" + "\n");
+            }
+            if (numofresive == 20) {
+                break;
+            }
+        }
+        updated=false;
     }
 }
+

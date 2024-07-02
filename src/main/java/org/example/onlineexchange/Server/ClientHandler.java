@@ -148,14 +148,16 @@ public class ClientHandler implements Runnable{
                 }
                 continue;
             }
-
-            if (orders[0].equals("[UPDATED]")) {
+            System.out.println(input);
+            if (orders[0].equals("[UPDATE]")) {
                 for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
                     if (!updated[i]) {
+                        System.out.println("123");
                         for (int j = 0; j < 4; ) {
                             if (j == 0) {
                                 if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
-                                    sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                    sender.format(output="[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                    System.out.println(output);
                                 } else {
                                     sender.format("[PRICECHENGEUPDATED]");
                                 }
