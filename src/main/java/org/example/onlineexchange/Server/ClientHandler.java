@@ -14,10 +14,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Formatter;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientHandler implements Runnable{
     public String name;
@@ -38,6 +35,14 @@ public class ClientHandler implements Runnable{
     private Coin coins[] = new Coin[5];
     private boolean updated[] = {false, false, false, false, false};
 
+    Map<String, Integer> indexGetter = new HashMap<>();
+    {
+        indexGetter.put("USD", 0);
+        indexGetter.put("EUR", 1);
+        indexGetter.put("TOMAN", 2);
+        indexGetter.put("YEN", 3);
+        indexGetter.put("GBP", 4);
+    }
 
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -151,17 +156,14 @@ public class ClientHandler implements Runnable{
 
 
             if (orders[0].equals("[UPDATE]")) {
-                System.out.println("ok");
                 for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
                     if (!updated[i]) {
                         for (int j = 0; j < 4; ) {
                             if (j == 0) {
                                 if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
                                     sender.format("[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()) + '\n');
-                                    System.out.println("ok sent");
                                 } else {
                                     sender.format("[PRICECHENGEUPDATED]" + '\n');
-                                    System.out.println("ok sent");
                                 }
                                 input = receiver.nextLine();
                                 orders = input.split(",");
@@ -198,6 +200,11 @@ public class ClientHandler implements Runnable{
                     }
                 }
                 continue;
+            }
+
+            if (Objects.equals(request.getCommand(), "GET PRICE")){
+                sender.format(new Request("SUCCESS",
+                        String.valueOf(coins[indexGetter.get(request.getParameter(0))].getPrice())).toString());
             }
 
         }

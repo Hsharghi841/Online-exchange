@@ -64,7 +64,7 @@
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="USD(دلار)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" onMouseClicked="#token_clicked" onMouseDragged="#token_clicked" text="USD(دلار)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="Calibri Bold" size="16.0" />
                            </font>
@@ -114,7 +114,7 @@
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="EUR(یورو)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" onMouseClicked="#token_clicked" text="EUR(یورو)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="Calibri Bold" size="16.0" />
                            </font>
@@ -214,7 +214,7 @@
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="YEN(ین)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" onMouseClicked="#token_clicked" text="YEN(ین)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="Calibri Bold" size="16.0" />
                            </font>
@@ -264,7 +264,7 @@
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="GBP(پوند)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" onMouseClicked="#token_clicked" text="GBP(پوند)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="Calibri Bold" size="16.0" />
                            </font>

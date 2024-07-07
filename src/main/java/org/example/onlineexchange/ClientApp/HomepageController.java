@@ -1,14 +1,21 @@
 package org.example.onlineexchange.ClientApp;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.example.onlineexchange.Coins.*;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.Formatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -69,136 +76,156 @@ public class HomepageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        try {
-            socket = ClientSocket.getClientSocket();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            socket = ClientSocket.getClientSocket();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        coins[0] = new USD();
+//        coins[1] = new EUR();
+//        coins[2] = new TOMAN();
+//        coins[3] = new YEN();
+//        coins[4] = new GBP();
+////        new Thread(() -> {
+////            while (true) {
+//                System.out.println("123");
+//                if (!updated) {
+//                    numofresive=0;
+//                    updated = true;
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        System.out.println("cant sleep");
+//                    }
+//                    output = "[UPDATE]";
+//                    socket.send(output + "\n");
+//                }
+//                input = socket.receive();
+//                orders = input.split(",");
+//                if (orders[0].equals("[PRICECHENGE]")) {
+//                    for (int i = 0; i < coins.length; i++) {
+//                        if (orders[1].equals(coins[i].getName())) {
+//                            temp = coins[i];
+//                            numcoinselection = i;
+//                            break;
+//                        }
+//                    }
+//                    temp.setPrice(Double.valueOf(orders[2]));
+//                    if (numcoinselection == 0) {
+//                        USDPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 1) {
+//                        EURPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 2) {
+//                        TOMANPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 3) {
+//                        YENPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 4) {
+//                        GBPPRICE.setText(orders[2]);
+//                    }
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[1]");
+//                } else if (orders[0].equals("[PRICECHENGEUPDATED]")) {
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[1]");
+//                } else if (orders[0].equals("[MAXPRICECHENGE]")) {
+//                    for (int i = 0; i < coins.length; i++) {
+//                        if (orders[1].equals(coins[i].getName())) {
+//                            temp = coins[i];
+//                            numcoinselection = i;
+//                            break;
+//                        }
+//                    }
+//                    temp.setMaxprice(Double.valueOf(orders[2]));
+//                    if (numcoinselection == 0) {
+//                        USDMAXPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 1) {
+//                        EURMAXPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 2) {
+//                        TOMANMAXPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 3) {
+//                        YENMAXPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 4) {
+//                        GBPMAXPRICE.setText(orders[2]);
+//                    }
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[2]");
+//                } else if (orders[0].equals("[MAXPRICECHENGEUPDATED]")) {
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[2]");
+//                } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
+//                    for (int i = 0; i < coins.length; i++) {
+//                        if (orders[1].equals(coins[i].getName())) {
+//                            temp = coins[i];
+//                            numcoinselection = i;
+//                            break;
+//                        }
+//                    }
+//                    temp.setPercentchenge(Double.valueOf(orders[2]));
+//                    if (numcoinselection == 0) {
+//                        USDPERCENT.setText(orders[2]);
+//                    } else if (numcoinselection == 1) {
+//                        EURPERCENT.setText(orders[2]);
+//                    } else if (numcoinselection == 2) {
+//                        TOMANPERCENT.setText(orders[2]);
+//                    } else if (numcoinselection == 3) {
+//                        YENPERCENT.setText(orders[2]);
+//                    } else if (numcoinselection == 4) {
+//                        GBPPERCENT.setText(orders[2]);
+//                    }
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[3]");
+//                } else if (orders[0].equals("[PERCENTCHENGECHENGEUPDATED]")) {
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[3]");
+//                } else if (orders[0].equals("[MINPRICECHENGE]")) {
+//                    for (int i = 0; i < coins.length; i++) {
+//                        if (orders[1].equals(coins[i].getName())) {
+//                            temp = coins[i];
+//                            numcoinselection = i;
+//                            break;
+//                        }
+//                    }
+//                    temp.setMinprice(Double.valueOf(orders[2]));
+//                    if (numcoinselection == 0) {
+//                        USDMINPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 1) {
+//                        EURMINPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 2) {
+//                        TOMANMINPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 3) {
+//                        YENMINPRICE.setText(orders[2]);
+//                    } else if (numcoinselection == 4) {
+//                        GBPMINPRICE.setText(orders[2]);
+//                    }
+//                    socket.send("[SUCCSFUL],[4]");
+//                } else if (orders[0].equals("[MINPRICECHENGEUPDATED]")) {
+//                    numofresive++;
+//                    socket.send("[SUCCSFUL],[4]");
+//                }
+//                if(numofresive==20)
+//                    updated=false;
+////            }
+////        }).start();
+    }
 
-        coins[0] = new USD();
-        coins[1] = new EUR();
-        coins[2] = new TOMAN();
-        coins[3] = new YEN();
-        coins[4] = new GBP();
-//        new Thread(() -> {
-//            while (true) {
-                System.out.println("123");
-                if (!updated) {
-                    numofresive=0;
-                    updated = true;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        System.out.println("cant sleep");
-                    }
-                    output = "[UPDATE]";
-                    socket.send(output + "\n");
-                }
-                input = socket.receive();
-                orders = input.split(",");
-                if (orders[0].equals("[PRICECHENGE]")) {
-                    for (int i = 0; i < coins.length; i++) {
-                        if (orders[1].equals(coins[i].getName())) {
-                            temp = coins[i];
-                            numcoinselection = i;
-                            break;
-                        }
-                    }
-                    temp.setPrice(Double.valueOf(orders[2]));
-                    if (numcoinselection == 0) {
-                        USDPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 1) {
-                        EURPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 2) {
-                        TOMANPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 3) {
-                        YENPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 4) {
-                        GBPPRICE.setText(orders[2]);
-                    }
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[1]");
-                } else if (orders[0].equals("[PRICECHENGEUPDATED]")) {
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[1]");
-                } else if (orders[0].equals("[MAXPRICECHENGE]")) {
-                    for (int i = 0; i < coins.length; i++) {
-                        if (orders[1].equals(coins[i].getName())) {
-                            temp = coins[i];
-                            numcoinselection = i;
-                            break;
-                        }
-                    }
-                    temp.setMaxprice(Double.valueOf(orders[2]));
-                    if (numcoinselection == 0) {
-                        USDMAXPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 1) {
-                        EURMAXPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 2) {
-                        TOMANMAXPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 3) {
-                        YENMAXPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 4) {
-                        GBPMAXPRICE.setText(orders[2]);
-                    }
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[2]");
-                } else if (orders[0].equals("[MAXPRICECHENGEUPDATED]")) {
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[2]");
-                } else if (orders[0].equals("[PERCENTCHENGECHENGE]")) {
-                    for (int i = 0; i < coins.length; i++) {
-                        if (orders[1].equals(coins[i].getName())) {
-                            temp = coins[i];
-                            numcoinselection = i;
-                            break;
-                        }
-                    }
-                    temp.setPercentchenge(Double.valueOf(orders[2]));
-                    if (numcoinselection == 0) {
-                        USDPERCENT.setText(orders[2]);
-                    } else if (numcoinselection == 1) {
-                        EURPERCENT.setText(orders[2]);
-                    } else if (numcoinselection == 2) {
-                        TOMANPERCENT.setText(orders[2]);
-                    } else if (numcoinselection == 3) {
-                        YENPERCENT.setText(orders[2]);
-                    } else if (numcoinselection == 4) {
-                        GBPPERCENT.setText(orders[2]);
-                    }
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[3]");
-                } else if (orders[0].equals("[PERCENTCHENGECHENGEUPDATED]")) {
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[3]");
-                } else if (orders[0].equals("[MINPRICECHENGE]")) {
-                    for (int i = 0; i < coins.length; i++) {
-                        if (orders[1].equals(coins[i].getName())) {
-                            temp = coins[i];
-                            numcoinselection = i;
-                            break;
-                        }
-                    }
-                    temp.setMinprice(Double.valueOf(orders[2]));
-                    if (numcoinselection == 0) {
-                        USDMINPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 1) {
-                        EURMINPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 2) {
-                        TOMANMINPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 3) {
-                        YENMINPRICE.setText(orders[2]);
-                    } else if (numcoinselection == 4) {
-                        GBPMINPRICE.setText(orders[2]);
-                    }
-                    socket.send("[SUCCSFUL],[4]");
-                } else if (orders[0].equals("[MINPRICECHENGEUPDATED]")) {
-                    numofresive++;
-                    socket.send("[SUCCSFUL],[4]");
-                }
-                if(numofresive==20)
-                    updated=false;
-//            }
-//        }).start();
+    @FXML
+    public void token_clicked(MouseEvent e) throws IOException {
+        System.out.println("***");
+        String tokenName = ((Label) e.getSource()).getText();
+        System.out.println("***");
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("token-view.fxml"));
+        stage.setScene(new Scene(fxmlLoader.load(), stage.getScene().getWidth(), stage.getScene().getHeight()));
+
+        if(Objects.equals(tokenName, "USD(دلار)"))
+            ((tokenViewController)fxmlLoader.getController()).init("USD");
+        else if(Objects.equals(tokenName, "EUR(یورو)"))
+            ((tokenViewController)fxmlLoader.getController()).init("EUR");
+        else if(Objects.equals(tokenName, "YEN(ین)"))
+            ((tokenViewController)fxmlLoader.getController()).init("YEN");
+        else if(Objects.equals(tokenName, "GBP(پوند)"))
+            ((tokenViewController)fxmlLoader.getController()).init("GBP");
+
     }
 }
