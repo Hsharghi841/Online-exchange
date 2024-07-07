@@ -39,12 +39,37 @@
             </VBox>
          </content>
       </ScrollPane>
-      <ScrollPane layoutX="208.0" layoutY="336.0" prefHeight="235.0" prefWidth="191.0" AnchorPane.rightAnchor="0.0">
+      <ScrollPane fitToWidth="true" layoutX="208.0" layoutY="336.0" prefHeight="235.0" prefWidth="191.0" AnchorPane.leftAnchor="209.0" AnchorPane.rightAnchor="0.0">
          <content>
-            <VBox fx:id="BUY" prefHeight="253.0" prefWidth="179.0" />
+            <VBox fx:id="SELL1" alignment="TOP_CENTER">
+               <children>
+                  <HBox fx:id="hBox1" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="0.0" prefWidth="199.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <AnchorPane HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="CENTER" text="مقدار" textFill="#038663" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Calibri Bold Italic" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="CENTER" text="قیمت" textFill="#456b02" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Calibri" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </content>
       </ScrollPane>
-      <Label alignment="CENTER" layoutX="327.0" layoutY="308.0" prefHeight="31.0" prefWidth="59.0" text="مقدار" textAlignment="RIGHT" textFill="#3f9a02" textOverrun="CLIP">
+      <Label alignment="CENTER" layoutX="327.0" layoutY="308.0" prefHeight="31.0" prefWidth="59.0" text="مقدار" textAlignment="RIGHT" textFill="#3f9a02" textOverrun="CLIP" AnchorPane.rightAnchor="14.0">
          <font>
             <Font name="Calibri Bold Italic" size="26.0" />
          </font>
@@ -54,7 +79,7 @@
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="327.0" layoutY="34.0" prefHeight="31.0" prefWidth="59.0" text="مقدار" textAlignment="RIGHT" textFill="#99034d" textOverrun="CLIP">
+      <Label alignment="CENTER" layoutX="327.0" layoutY="34.0" prefHeight="31.0" prefWidth="59.0" text="مقدار" textAlignment="RIGHT" textFill="#99034d" textOverrun="CLIP" AnchorPane.rightAnchor="14.0">
          <font>
             <Font name="Calibri Bold Italic" size="26.0" />
          </font>
