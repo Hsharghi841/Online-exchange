@@ -18,7 +18,7 @@ public class ExchengPage implements Initializable {
 
     public void SellOrders(){
         try {
-            HBox child= new FXMLLoader(clientApplication.class.getResource("ordersHBox.fxml")).load();
+            HBox child= new FXMLLoader(ClientApplication.class.getResource("ordersHBox.fxml")).load();
             SELL.getChildren().add(child);
         } catch (IOException e) {
             System.out.println("cant open");

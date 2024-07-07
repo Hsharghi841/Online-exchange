@@ -18,12 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.example.onlineexchange.EmailSender;
 import org.example.onlineexchange.Request;
 import org.example.onlineexchange.User;
 
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -213,14 +211,14 @@ public class LoginSceneController implements Initializable {
     @FXML
     void signUpLblHandler(MouseEvent e) throws IOException {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(new FXMLLoader(clientApplication.class.getResource("signUp-view.fxml")).load(),
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("signUp-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 
     @FXML
     void loginLblHandler(Event e) throws IOException {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(new FXMLLoader(clientApplication.class.getResource("login-view.fxml")).load(),
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("login-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 
