@@ -18,12 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.example.onlineexchange.EmailSender;
 import org.example.onlineexchange.Request;
 import org.example.onlineexchange.User;
 
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -98,34 +96,18 @@ public class LoginSceneController implements Initializable {
     }
 
     @FXML
-    protected void loginBtnHandler(){
+    protected void loginBtnHandler(ActionEvent e) throws IOException {
         if(!captchaCheck()){
             printErr("captcha is incorrect");
             return;
         }
 
-//        for(User user : User.allUsers){
-//            if(Objects.equals(user.getUsername(), usernameTxf.getText())){
-//                currentUser = user;
-//                break;
-//            }
-//        }
-
-//        if (currentUser == null){
-//            printErr("User not found");
-//            return;
-//        }
-//
-//        if(!Objects.equals(passwordTxf.getText(), currentUser.getPassword())){
-//            printErr("Password not match");
-//            return;
-//        }
 
         ClientSocket cl = null;
 
         try {
             cl = ClientSocket.getClientSocket();
-        } catch (IOException e) {
+        } catch (IOException e1) {
             printErr("connect field");
             return;
         }
@@ -153,6 +135,10 @@ public class LoginSceneController implements Initializable {
 
 
         System.out.println(STR."hi \{usernameTxf.getText()}");// this part is for forward app to user panel
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("home-page.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
+
     }
 
     @FXML
@@ -213,14 +199,14 @@ public class LoginSceneController implements Initializable {
     @FXML
     void signUpLblHandler(MouseEvent e) throws IOException {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(new FXMLLoader(clientApplication.class.getResource("signUp-view.fxml")).load(),
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("signUp-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 
     @FXML
     void loginLblHandler(Event e) throws IOException {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(new FXMLLoader(clientApplication.class.getResource("login-view.fxml")).load(),
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("login-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 
