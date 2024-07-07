@@ -151,51 +151,70 @@ public class ClientHandler implements Runnable{
             System.out.println(input);
             if (orders[0].equals("[UPDATE]")) {
                 for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
+                    i=i%5;
                     if (!updated[i]) {
                         System.out.println("123");
                         for (int j = 0; j < 4; ) {
                             if (j == 0) {
                                 if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
-                                    sender.format(output="[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice()));
+                                    coins[i].setPrice(server.getCoins()[i].getPrice());
+                                    sender.format(output="[PRICECHENGE]," + coins[i].getName() + "," + String.valueOf(coins[i].getPrice())+"\n");
                                     System.out.println(output);
                                 } else {
-                                    sender.format("[PRICECHENGEUPDATED]");
+                                    sender.format("[PRICECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
+                                //System.out.println(input);
                                 orders = input.split(",");
-                                j = orders[1].indexOf(2) + 48;
+                                j = Integer.valueOf(orders[1]);
+                                //System.out.println(orders[1]);
                             } else if (j == 1) {
                                 if (server.getCoins()[i].getMaxprice() != coins[i].getMaxprice()) {
-                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice()));
+                                    coins[i].setMaxprice(server.getCoins()[i].getMaxprice());
+                                    sender.format("[MAXPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMaxprice())+"\n");
                                 } else {
-                                    sender.format("[MAXPRICECHENGEUPDATED]");
+                                    sender.format("[MAXPRICECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
+                                //System.out.println(input);
                                 orders = input.split(",");
-                                j = orders[1].indexOf(2) + 48;
+                                j = Integer.valueOf(orders[1]);
+                                System.out.println(j);
                             } else if (j == 2) {
                                 if (server.getCoins()[i].getPercentchenge() != coins[i].getPercentchenge()) {
-                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge()));
+                                    coins[i].setPercentchenge(server.getCoins()[i].getPercentchenge());
+                                    System.out.println("percent chenge ok");
+                                    sender.format("[PERCENTCHENGECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getPercentchenge())+"\n");
                                 } else {
-                                    sender.format("[PERCENTCHENGECHENGEUPDATED]");
+                                    sender.format("[PERCENTCHENGECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
+                                //System.out.println(input);
                                 orders = input.split(",");
-                                j = orders[1].indexOf(2) + 48;
+                                j = Integer.valueOf(orders[1]);
                             } else if (j == 3) {
                                 if (server.getCoins()[i].getMinprice() != coins[i].getMinprice()) {
-                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice()));
+                                    coins[i].setMinprice(server.getCoins()[i].getMinprice());
+                                    System.out.println("ok set");
+                                    sender.format("[MINPRICECHENGE]" + "," + coins[i].getName() + "," + String.valueOf(coins[i].getMinprice())+"\n");
                                 } else {
-                                    sender.format("[MINPRICECHENGEUPDATED]");
+                                    sender.format("[MINPRICECHENGEUPDATED]"+"\n");
+                                    System.out.println("not ok set");
                                 }
                                 input = receiver.nextLine();
+                                //System.out.println(input);
                                 orders = input.split(",");
-                                j = orders[1].indexOf(2) + 48;
+                                j = Integer.valueOf(orders[1]);
                             }
                         }
+                        System.out.println(updated);
+                        updated[i]=true;
                     }
                 }
-                continue;
+                System.out.println("finish");
+                for (int i = 0; i <5; i++) {
+                    updated[i]=false;
+                }
             }
 
         }
