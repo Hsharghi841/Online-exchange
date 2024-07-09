@@ -3,6 +3,7 @@ package org.example.onlineexchange.ClientApp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -15,6 +16,8 @@ public class ExchengPage implements Initializable {
     VBox SELL;
     @FXML
     VBox BUY;
+    @FXML
+    ChoiceBox<String> choiceBox;
 
     public void SellOrders(){
         try {
@@ -39,6 +42,9 @@ public class ExchengPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SellOrders();
-        BuyOrders();;
+        BuyOrders();
+    }
+
+    public void maxofsl(){
     }
 }

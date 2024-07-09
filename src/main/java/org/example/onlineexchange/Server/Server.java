@@ -25,7 +25,7 @@ public class Server {
     public Server() {
 
         try {
-            serverSocket = new ServerSocket(8000);
+            serverSocket = new ServerSocket(8080);
         } catch (IOException e) {
             System.err.println("Server socket error.");
         }
@@ -88,25 +88,25 @@ public class Server {
                 }
                 orders = input.split(",");
                 time = STR."\{orders[1]}";
-                coins[0].setPrice1(Double.parseDouble(orders[2]));
-                coins[0].setMaxprice(Double.parseDouble(orders[2]));
-                coins[0].setMinprice(Double.parseDouble(orders[2]));
+                coins[0].setPrice1(Double.parseDouble(orders[4])/(Double.valueOf(orders[2])));
+                coins[0].setMaxprice(Double.parseDouble(orders[4])/(Double.valueOf(orders[2])));
+                coins[0].setMinprice(Double.valueOf(orders[4])/(Double.parseDouble(orders[2])));
                 coins[0].setPercentchenge(0.0);
-                coins[1].setPrice1(Double.parseDouble(orders[3]));
-                coins[1].setMaxprice(Double.parseDouble(orders[3]));
-                coins[1].setMinprice(Double.parseDouble(orders[3]));
+                coins[1].setPrice1(Double.parseDouble(orders[4])/(Double.valueOf(orders[3])));
+                coins[1].setMaxprice(Double.parseDouble(orders[4])/(Double.valueOf(orders[3])));
+                coins[1].setMinprice(Double.valueOf(orders[4])/(Double.parseDouble(orders[3])));
                 coins[1].setPercentchenge(0.0);
                 coins[2].setPrice1(Double.valueOf(orders[4]));
                 coins[2].setMaxprice(Double.valueOf(orders[4]));
                 coins[2].setMinprice(Double.valueOf(orders[4]));
                 coins[2].setPercentchenge(0.0);
-                coins[3].setPrice1(Double.valueOf(orders[5]));
-                coins[3].setMaxprice(Double.valueOf(orders[5]));
-                coins[3].setMinprice(Double.valueOf(orders[5]));
+                coins[3].setPrice1(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
+                coins[3].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
+                coins[3].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
                 coins[3].setPercentchenge(0.0);
-                coins[4].setPrice1(Double.parseDouble(orders[6]));
-                coins[4].setMaxprice(Double.parseDouble(orders[6]));
-                coins[4].setMinprice(Double.parseDouble(orders[6]));
+                coins[4].setPrice1(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
+                coins[4].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
+                coins[4].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                 coins[4].setPercentchenge(0.0);
                 coinsPrice.add(new double[]{coins[0].getPrice(), coins[1].getPrice(),
                         coins[2].getPrice(), coins[3].getPrice(), coins[4].getPrice()});
@@ -123,25 +123,25 @@ public class Server {
                         System.out.println("cant read");
                     }
                     orders=input.split(",");
-                    coins[0].setPrice(Double.valueOf(orders[2]));
-                    coins[0].setMaxprice(Double.valueOf(orders[2]));
-                    coins[0].setMinprice(Double.valueOf(orders[2]));
+                    coins[0].setPrice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
+                    coins[0].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
+                    coins[0].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
                     coins[0].setPercentchenge((coins[0].getPrice()-coins[0].getPastprice())*100/coins[0].getPastprice());
-                    coins[1].setPrice(Double.valueOf(orders[3]));
-                    coins[1].setMaxprice(Double.valueOf(orders[3]));
-                    coins[1].setMinprice(Double.valueOf(orders[3]));
+                    coins[1].setPrice(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
+                    coins[1].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
+                    coins[1].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
                     coins[1].setPercentchenge((coins[1].getPrice()-coins[1].getPastprice())*100/coins[1].getPastprice());
                     coins[2].setPrice(Double.valueOf(orders[4]));
                     coins[2].setMaxprice(Double.valueOf(orders[4]));
                     coins[2].setMinprice(Double.valueOf(orders[4]));
                     coins[2].setPercentchenge((coins[2].getPrice()-coins[2].getPastprice())*100/coins[2].getPastprice());
-                    coins[3].setPrice(Double.valueOf(orders[5]));
-                    coins[3].setMaxprice(Double.valueOf(orders[5]));
-                    coins[3].setMinprice(Double.valueOf(orders[5]));
+                    coins[3].setPrice(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
+                    coins[3].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
+                    coins[3].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[5])));
                     coins[3].setPercentchenge((coins[3].getPrice()-coins[3].getPastprice())*100/coins[3].getPastprice());
-                    coins[4].setPrice(Double.valueOf(orders[6]));
-                    coins[4].setMaxprice(Double.valueOf(orders[6]));
-                    coins[4].setMinprice(Double.valueOf(orders[6]));
+                    coins[4].setPrice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
+                    coins[4].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
+                    coins[4].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                     coins[4].setPercentchenge((coins[4].getPrice()-coins[4].getPastprice())*100/coins[4].getPastprice());
                     try {
                         sleep(1000);
