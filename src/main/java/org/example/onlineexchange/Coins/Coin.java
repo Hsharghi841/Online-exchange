@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Coin {
     protected String name;
-    protected double price, maxprice, minprice,percentchenge,pastprice=0;
-    protected ArrayList<Double> prices =new ArrayList<>();
+    protected double price, maxprice, minprice=100000000, percentchenge=1, pastprice = 0;
+    protected ArrayList<Double> prices = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -29,7 +29,8 @@ public class Coin {
     }
 
     public void setMaxprice(double maxprice) {
-        this.maxprice = maxprice;
+        if (maxprice > this.maxprice)
+            this.maxprice = maxprice;
     }
 
     public double getMinprice() {
@@ -37,7 +38,9 @@ public class Coin {
     }
 
     public void setMinprice(double minprice) {
-        this.minprice = minprice;
+        if (minprice < this.minprice) {
+            this.minprice = minprice;
+        }
     }
 
     public double getPercentchenge() {
@@ -55,8 +58,9 @@ public class Coin {
     public void setPastprice(double pastprice) {
         this.pastprice = pastprice;
     }
+
     public void setPrice1(double price) {
-        pastprice=price;
+        pastprice = price;
         this.price = price;
     }
 }

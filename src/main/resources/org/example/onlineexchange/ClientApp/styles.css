@@ -1,0 +1,24 @@
+.hbox {
+    -fx-border-color: aqua;
+    -fx-border-width: 0 0 2 0px;
+}
+.hbox1{
+    -fx-border-color: aqua;
+    -fx-border-width: 2 0 2 0px;
+}
+.hbox2{
+    -fx-border-color: aqua;
+    -fx-border-width: 2 0 2 0px;
+}
+.hbox3{
+    -fx-border-color: aqua;
+    -fx-border-width: 2 0 2 0px;
+}
+.hbox4{
+    -fx-border-color: aqua;
+    -fx-border-width: 2 0 2 0px;
+}
+.hbox5{
+    -fx-border-color: aqua;
+    -fx-border-width: 2 0 0 0px;
+}
