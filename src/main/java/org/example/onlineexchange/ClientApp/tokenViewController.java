@@ -1,5 +1,6 @@
 package org.example.onlineexchange.ClientApp;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -38,7 +39,8 @@ public class tokenViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         chartTimeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> updater()));
-
+        chartTimeline.setCycleCount(Animation.INDEFINITE);
+        chartTimeline.play();
     }
 
     public void init(String tokenName){
@@ -48,7 +50,7 @@ public class tokenViewController implements Initializable {
 
 
     public void updater(){
-        System.out.println("123");
+
         ClientSocket cl;
         try {
             cl = ClientSocket.getClientSocket();
