@@ -1,38 +1,35 @@
 package org.example.onlineexchange.ClientApp;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.onlineexchange.Coins.*;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Formatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class HomepageController implements Initializable {
 
     private ClientSocket socket;
 
-    private boolean updated = false,sorted[]={false,false,false,false};
+    private boolean updated = false, sorted[] = {false, false, false, false};
 
     private int numofresive = 0;
     private String input, output;
@@ -101,7 +98,6 @@ public class HomepageController implements Initializable {
     Label MINPRICE;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -116,14 +112,15 @@ public class HomepageController implements Initializable {
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-        Timeline timeline1 =new Timeline(new KeyFrame(Duration.seconds(1), event -> UpDate()));
+        Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(1), event -> UpDate()));
         timeline1.setCycleCount(2);
         timeline1.play();
-        Timeline timeline =new Timeline(new KeyFrame(Duration.seconds(60),event -> UpDate()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(60), event -> UpDate()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-    public void UpDate(){
+
+    public void UpDate() {
         while (true) {
             if (!updated) {
                 numofresive = 0;
@@ -143,13 +140,13 @@ public class HomepageController implements Initializable {
                 }
                 temp.setPrice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    USDPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 1) {
-                    EURPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    EURPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 3) {
-                    YENPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    YENPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 4) {
-                    GBPPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    GBPPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],1" + "\n");
@@ -166,14 +163,14 @@ public class HomepageController implements Initializable {
                 }
                 temp.setMaxprice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    USDMAXPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 1) {
-                    EURMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    EURMAXPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
 
                 } else if (numcoinselection == 3) {
-                    YENMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    YENMAXPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 4) {
-                    GBPMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    GBPMAXPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],2" + "\n");
@@ -189,14 +186,17 @@ public class HomepageController implements Initializable {
                     }
                 }
                 temp.setPercentchenge(Double.valueOf(orders[2]));
+
+                double d = Double.valueOf(orders[2]);
+                d = ((double) Math.round(d * 100)) / 100;
                 if (numcoinselection == 0) {
-                    USDPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
+                    USDPERCENT.setText(STR."\{d}");
                 } else if (numcoinselection == 1) {
-                    EURPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
+                    EURPERCENT.setText(STR."\{d}");
                 } else if (numcoinselection == 3) {
-                    YENPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
+                    YENPERCENT.setText(STR."\{d}");
                 } else if (numcoinselection == 4) {
-                    GBPPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
+                    GBPPERCENT.setText(STR."\{d}");
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],3" + "\n");
@@ -213,13 +213,13 @@ public class HomepageController implements Initializable {
                 }
                 temp.setMinprice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    USDMINPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 1) {
-                    EURMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
-                }  else if (numcoinselection == 3) {
-                    YENMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    EURMINPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
+                } else if (numcoinselection == 3) {
+                    YENMINPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 } else if (numcoinselection == 4) {
-                    GBPMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                    GBPMINPRICE.setText(String.valueOf(Math.round(Double.valueOf(orders[2]))));
                 }
                 socket.send("[SUCCSFUL],4" + "\n");
                 numofresive++;
@@ -232,139 +232,92 @@ public class HomepageController implements Initializable {
                 break;
             }
         }
-        updated=false;
+        updated = false;
         System.out.println(updated);
     }
 
-    public void SORTPRICE(){
-        ObservableList observableList=vbox.getChildren();
-        vbox.getChildren().removeAll();
-        if(!sorted[0]){
-            observableList.sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(1);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(1);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? -1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:1);
-                }
-            });
-            sorted[0]=true;
-        }else{
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(1);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(1);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? 1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:-1);
-                }
-            });
-            sorted[0]=false;
-        }
-        vbox.getChildren().addAll(observableList);
-    }
+    void sort(int i, boolean ascending){
+        ObservableList<Node> o1 = vbox.getChildren();
 
-    public void SORTPERCENT(){
-        if(!sorted[1]){
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(2);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(2);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? -1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:1);
-                }
-            });
-            sorted[1]=true;
-        }else{
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(2);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(2);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? 1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:-1);
-                }
-            });
-            sorted[1]=false;
+        ArrayList<Node> o2 = new ArrayList<>(o1);
+
+        o2.sort(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                HBox h1 = (HBox) o1;
+                HBox h2 = (HBox) o2;
+
+                Label l1 = (Label) ((AnchorPane)h1.getChildren().get(i)).getChildren().getFirst();
+                Label l2 = (Label) ((AnchorPane)h2.getChildren().get(i)).getChildren().getFirst();
+
+                double value1 = Double.valueOf(l1.getText());
+                double value2 = Double.valueOf(l2.getText());
+
+                if(ascending)return Double.compare(value1, value2);
+                return Double.compare(value2, value1);
+            }
+        });
+
+        o1.clear();
+
+        for (int j = 0; j < o2.size(); j++) {
+            o1.add(o2.get(j));
         }
     }
 
-    public void SORTMAXPRICE(){
-        if(!sorted[2]){
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(3);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(3);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? -1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:1);
-                }
-            });
-            sorted[2]=true;
-        }else{
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(3);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(3);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? 1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:-1);
-                }
-            });
-            sorted[2]=false;
-        }
+    boolean sorted1 = false;
+    boolean sorted2 = false;
+    boolean sorted3 = false;
+    boolean sorted4 = false;
+
+    public void SORTPRICE() {
+        sort(1, !sorted1);
+        sorted1 = !sorted1;
+        sorted2 = false;
+        sorted3 = false;
+        sorted4 = false;
+    }
+    public void SORTPERCENT() {
+        sort(2, !sorted2);
+        sorted2 = !sorted2;
+        sorted1 = false;
+        sorted3 = false;
+        sorted4 = false;
+    }
+    public void SORTMAXPRICE() {
+        sort(3, !sorted3);
+        sorted3 = !sorted3;
+        sorted1 = false;
+        sorted2 = false;
+        sorted4 = false;
+    }
+    public void SORTMINPRICE() {
+        sort(4, !sorted4);
+        sorted4 = !sorted4;
+        sorted1 = false;
+        sorted2 = false;
+        sorted3 = false;
     }
 
-    public void SORTMINPRICE(){
-        if(!sorted[3]){
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(4);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(4);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? -1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:1);
-                }
-            });
-            sorted[3]=true;
-        }else{
-            vbox.getChildren().sort(new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    HBox o3=(HBox) o1;
-                    HBox o4=(HBox) o2;
-                    AnchorPane a1= (AnchorPane) o3.getChildren().get(4);
-                    AnchorPane a2= (AnchorPane) o4.getChildren().get(4);
-                    Label l1= (Label) a1.getChildren().get(0);
-                    Label l2= (Label) a2.getChildren().get(0);
-                    return Double.valueOf(l1.getText())<Double.valueOf(l2.getText())? 1:(Double.valueOf(l1.getText())==Double.valueOf(l2.getText())? 0:-1);
-                }
-            });
-            sorted[3]=false;
-        }
+    @FXML
+    public void token_clicked(MouseEvent e) throws IOException {
+        System.out.println("***");
+        String tokenName = ((Label) e.getSource()).getText();
+        System.out.println("***");
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("token-view.fxml"));
+        stage.setScene(new Scene(fxmlLoader.load(), stage.getScene().getWidth(), stage.getScene().getHeight()));
+
+        if(Objects.equals(tokenName, "USD(دلار)"))
+            ((tokenViewController)fxmlLoader.getController()).init("USD");
+        else if(Objects.equals(tokenName, "EUR(یورو)"))
+            ((tokenViewController)fxmlLoader.getController()).init("EUR");
+        else if(Objects.equals(tokenName, "YEN(ین)"))
+            ((tokenViewController)fxmlLoader.getController()).init("YEN");
+        else if(Objects.equals(tokenName, "GBP(پوند)"))
+            ((tokenViewController)fxmlLoader.getController()).init("GBP");
+
     }
+
 }
 
