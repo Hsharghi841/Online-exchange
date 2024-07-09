@@ -64,7 +64,7 @@
       </HBox>
       <VBox fx:id="vbox" alignment="CENTER" layoutX="30.0" layoutY="98.0" prefHeight="269.0" prefWidth="540.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="29.0">
          <children>
-            <HBox fx:id="USDHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="540.0" styleClass="hbox1" stylesheets="styles.css">
+            <HBox fx:id="USDHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="68.0" prefWidth="541.0" styleClass="hbox1" stylesheets="@styles.css">
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="73.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -75,7 +75,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="66.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="USDPRICE" alignment="CENTER" layoutX="23.0" layoutY="10.0" text="قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -84,7 +84,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="133.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="USDPERCENT" alignment="CENTER" layoutX="14.0" layoutY="11.0" text="درصد تغییرات" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -113,7 +113,7 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox fx:id="EURHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="540.0" styleClass="hbox2" stylesheets="@styles.css">
+            <HBox fx:id="EURHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="68.0" prefWidth="541.0" styleClass="hbox2" stylesheets="@styles.css">
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="73.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -124,7 +124,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="66.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="EURPRICE" alignment="CENTER" layoutX="23.0" layoutY="10.0" text="قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -133,7 +133,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="133.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="EURPERCENT" alignment="CENTER" layoutX="14.0" layoutY="11.0" text="درصد تغییرات" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -162,56 +162,7 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox fx:id="TOMANHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="540.0" styleClass="hbox3" stylesheets="styles.css">
-               <children>
-                  <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="73.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="تومان" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="66.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="TOMANPRICE" alignment="CENTER" layoutX="23.0" layoutY="10.0" text="قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Calibri Light Italic" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="133.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="TOMANPERCENT" alignment="CENTER" layoutX="14.0" layoutY="11.0" text="درصد تغییرات" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Calibri Light Italic" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="138.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="TOMANMAXPRICE" alignment="CENTER" layoutX="7.0" layoutY="10.0" text="بیشترین قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Calibri Light Italic" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefWidth="130.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="TOMANMINPRICE" alignment="CENTER" layoutX="11.0" layoutY="8.0" text="کمترین قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Calibri Light Italic" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-            <HBox fx:id="YENHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="540.0" styleClass="hbox4" stylesheets="styles.css">
+            <HBox fx:id="YENHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="68.0" prefWidth="541.0" styleClass="hbox4" stylesheets="@styles.css">
                <children>
                   <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="73.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -222,7 +173,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="66.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="YENPRICE" alignment="CENTER" layoutX="23.0" layoutY="10.0" text="قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -231,7 +182,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="133.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="YENPERCENT" alignment="CENTER" layoutX="14.0" layoutY="11.0" text="درصد تغییرات" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -260,9 +211,9 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox fx:id="GBPHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="540.0" styleClass="hbox5" stylesheets="styles.css">
+            <HBox fx:id="GBPHBOX" alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="68.0" prefWidth="541.0" styleClass="hbox5" stylesheets="@styles.css">
                <children>
-                  <AnchorPane layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="73.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label alignment="CENTER" layoutX="-3.0" layoutY="10.0" text="GBP(پوند)" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -271,7 +222,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="GBPPRICE" alignment="CENTER" layoutX="23.0" layoutY="10.0" text="قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -280,7 +231,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="150.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="150.0" layoutY="10.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="GBPPERCENT" alignment="CENTER" layoutX="14.0" layoutY="11.0" text="درصد تغییرات" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -289,7 +240,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="350.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane layoutX="350.0" layoutY="10.0" prefWidth="138.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="GBPMAXPRICE" alignment="CENTER" layoutX="7.0" layoutY="10.0" text="بیشترین قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -298,7 +249,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane HBox.hgrow="ALWAYS">
+                  <AnchorPane prefWidth="130.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="GBPMINPRICE" alignment="CENTER" layoutX="11.0" layoutY="8.0" text="کمترین قیمت" textFill="#0794f2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>

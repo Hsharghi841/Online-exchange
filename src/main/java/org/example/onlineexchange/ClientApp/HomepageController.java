@@ -142,15 +142,13 @@ public class HomepageController implements Initializable {
                 }
                 temp.setPrice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDPRICE.setText(orders[2]);
+                    USDPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 1) {
-                    EURPRICE.setText(orders[2]);
-                } else if (numcoinselection == 2) {
-                    TOMANPRICE.setText(orders[2]);
+                    EURPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 3) {
-                    YENPRICE.setText(orders[2]);
+                    YENPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 4) {
-                    GBPPRICE.setText(orders[2]);
+                    GBPPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],1" + "\n");
@@ -167,15 +165,14 @@ public class HomepageController implements Initializable {
                 }
                 temp.setMaxprice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDMAXPRICE.setText(orders[2]);
+                    USDMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 1) {
-                    EURMAXPRICE.setText(orders[2]);
-                } else if (numcoinselection == 2) {
-                    TOMANMAXPRICE.setText(orders[2]);
+                    EURMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+
                 } else if (numcoinselection == 3) {
-                    YENMAXPRICE.setText(orders[2]);
+                    YENMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 4) {
-                    GBPMAXPRICE.setText(orders[2]);
+                    GBPMAXPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],2" + "\n");
@@ -192,15 +189,13 @@ public class HomepageController implements Initializable {
                 }
                 temp.setPercentchenge(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDPERCENT.setText(orders[2]);
+                    USDPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
                 } else if (numcoinselection == 1) {
-                    EURPERCENT.setText(orders[2]);
-                } else if (numcoinselection == 2) {
-                    TOMANPERCENT.setText(orders[2]);
+                    EURPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
                 } else if (numcoinselection == 3) {
-                    YENPERCENT.setText(orders[2]);
+                    YENPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
                 } else if (numcoinselection == 4) {
-                    GBPPERCENT.setText(orders[2]);
+                    GBPPERCENT.setText(String.format("%.2f",Double.valueOf(orders[2]))+"%");
                 }
                 numofresive++;
                 socket.send("[SUCCSFUL],3" + "\n");
@@ -217,15 +212,13 @@ public class HomepageController implements Initializable {
                 }
                 temp.setMinprice(Double.valueOf(orders[2]));
                 if (numcoinselection == 0) {
-                    USDMINPRICE.setText(orders[2]);
+                    USDMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 1) {
-                    EURMINPRICE.setText(orders[2]);
-                } else if (numcoinselection == 2) {
-                    TOMANMINPRICE.setText(orders[2]);
-                } else if (numcoinselection == 3) {
-                    YENMINPRICE.setText(orders[2]);
+                    EURMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
+                }  else if (numcoinselection == 3) {
+                    YENMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 } else if (numcoinselection == 4) {
-                    GBPMINPRICE.setText(orders[2]);
+                    GBPMINPRICE.setText( String.format("%.0f",Double.valueOf(orders[2])));
                 }
                 socket.send("[SUCCSFUL],4" + "\n");
                 numofresive++;
