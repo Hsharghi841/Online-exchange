@@ -134,7 +134,7 @@
                   </VBox>
                   <VBox alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" HBox.hgrow="NEVER">
                      <children>
-                        <LineChart nodeOrientation="LEFT_TO_RIGHT">
+                        <LineChart fx:id="lineChart" animated="false" nodeOrientation="LEFT_TO_RIGHT">
                           <xAxis>
                             <CategoryAxis />
                           </xAxis>
@@ -144,9 +144,9 @@
                         </LineChart>
                         <HBox alignment="CENTER" fillHeight="false" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" text="دقیقه ای" />
-                              <Button mnemonicParsing="false" text="15 دقیقه ای" />
-                              <Button mnemonicParsing="false" text="ساعتی" />
+                              <Button mnemonicParsing="false" onAction="#oneMinute" text="دقیقه ای" />
+                              <Button mnemonicParsing="false" onAction="#fifteenMinute" text="15 دقیقه ای" />
+                              <Button mnemonicParsing="false" onAction="#sixtyMinute" text="ساعتی" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

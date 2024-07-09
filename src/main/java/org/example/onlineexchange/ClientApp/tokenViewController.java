@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -19,8 +20,13 @@ import org.example.onlineexchange.Request;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.logging.Level;
 
 public class tokenViewController implements Initializable {
@@ -34,9 +40,19 @@ public class tokenViewController implements Initializable {
 
 
     Timeline chartTimeline;
+    int interval = 1;
+    XYChart.Series<String, Double> series = new XYChart.Series<>();
+    ClientSocket cl;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            cl = ClientSocket.getClientSocket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        lineChart.getData().add(series);
 
         chartTimeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> updater()));
         chartTimeline.setCycleCount(Animation.INDEFINITE);
@@ -51,21 +67,30 @@ public class tokenViewController implements Initializable {
 
     public void updater(){
 
-        ClientSocket cl;
-        try {
-            cl = ClientSocket.getClientSocket();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         cl.send(new Request("GET PRICE", tokenNameLbl.getText()).toString());
-
         Request result = Request.requestProcessor(cl.receive());
-
         if (!Objects.equals(result.getCommand(), "SUCCESS"))return;
-
         tokenPriceLbl.setText(result.getParameter(0));
 
+        cl.send(new Request("GET CHART", tokenNameLbl.getText(), STR."\{interval}").toString());
+        result = Request.requestProcessor(cl.receive());
+        if (!Objects.equals(result.getCommand(), "SUCCESS"))return;
+        LocalTime time = LocalTime.parse(result.getParameter(0));
+
+        series.getData().clear();
+
+        for (int i = 1; i <= 15; i++) {
+            String value = result.getParameter(i);
+            if(Objects.equals(value, "null"))value = "0.0";
+            series.getData().add(new XYChart.Data<>(time.minusMinutes((long) (15 - i) * interval).format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    Double.parseDouble(value)));
+        }
+
     }
+
+    public void oneMinute(){interval = 1;}
+    public void fifteenMinute(){interval = 15;}
+    public void sixtyMinute(){interval = 60;}
+
 
 }

@@ -86,7 +86,7 @@ public class Server {
                     }
                 }
                 orders = input.split(",");
-                time = STR."\{orders[0]},\{orders[1]}";
+                time = STR."\{orders[1]}";
                 coins[0].setPrice1(Double.parseDouble(orders[2]));
                 coins[0].setMaxprice(Double.parseDouble(orders[2]));
                 coins[0].setMinprice(Double.parseDouble(orders[2]));
@@ -123,7 +123,7 @@ public class Server {
                         System.out.println("cant read");
                     }
                     orders = input.split(",");
-                    time = STR."\{orders[0]},\{orders[1]}";
+                    time = STR."\{orders[1]}";
                     coins[0].setPrice(Double.parseDouble(orders[2]));
                     coins[0].setMaxprice(Double.parseDouble(orders[2]));
                     coins[0].setMinprice(Double.parseDouble(orders[2]));
@@ -162,6 +162,10 @@ public class Server {
 
     public ArrayList<double[]> getCoinsPrice() {
         return coinsPrice;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public static void main(String[] args) {

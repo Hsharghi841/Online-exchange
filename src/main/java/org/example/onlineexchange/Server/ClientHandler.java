@@ -1,7 +1,6 @@
 package org.example.onlineexchange.Server;
 
 import org.example.onlineexchange.Coins.*;
-import javafx.scene.control.Alert;
 import org.example.onlineexchange.EmailSender;
 import org.example.onlineexchange.Exceptions.EmailNotFoundException;
 import org.example.onlineexchange.Exceptions.UserNameNotFoundException;
@@ -12,7 +11,6 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -204,8 +202,37 @@ public class ClientHandler implements Runnable{
 
             if (Objects.equals(request.getCommand(), "GET PRICE")){
                 sender.format(new Request("SUCCESS",
-                        String.valueOf(coins[indexGetter.get(request.getParameter(0))].getPrice())).toString());
+                        String.valueOf(server.getCoins()[indexGetter.get(request.getParameter(0))].getPrice())).toString());
+                continue;
             }
+
+            if(Objects.equals(request.getCommand(), "GET CHART")){
+                ArrayList<double[]> coinsPrice = server.getCoinsPrice();
+                String[] avePrice = new String[16];
+                synchronized (coinsPrice) {
+                    System.out.println(request.toString());
+                    int size = coinsPrice.size();
+                    int coinIndex = indexGetter.get(request.getParameter(0));
+                    System.out.println(request.getParameter(1));
+                    int interval = Integer.parseInt(request.getParameter(1));
+                    for (int i = 0; i < 15; i++) {
+                        int j;
+                        double sum = 0;
+                        for (j = 0; j < interval; j++) {
+                            int index = size - (i * interval + j) - 1;
+                            if (index < 0)break;
+                            sum += coinsPrice.get(index)[coinIndex];
+                        }
+                        avePrice[15 - i] = STR."\{sum / j}";
+                        if (j != interval)break;
+                    }
+                }
+
+                avePrice[0] = server.getTime();
+                sender.format(new Request("SUCCESS", avePrice).toString());
+                continue;
+            }
+
 
         }
 
