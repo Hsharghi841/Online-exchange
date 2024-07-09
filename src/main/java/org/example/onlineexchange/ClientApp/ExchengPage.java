@@ -18,8 +18,18 @@ public class ExchengPage implements Initializable {
 
     public void SellOrders(){
         try {
-            HBox child= new FXMLLoader(ClientApplication.class.getResource("ordersHBox.fxml")).load();
+            HBox child= new FXMLLoader(ClientApplication.class.getResource("SELLHBox.fxml")).load();
             SELL.getChildren().add(child);
+        } catch (IOException e) {
+            System.out.println("cant open");
+        }
+
+    }
+
+    public void BuyOrders(){
+        try {
+            HBox child= new FXMLLoader(ClientApplication.class.getResource("BUYHBox.fxml")).load();
+            BUY.getChildren().add(child);
         } catch (IOException e) {
             System.out.println("cant open");
         }
@@ -29,5 +39,6 @@ public class ExchengPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SellOrders();
+        BuyOrders();;
     }
 }
