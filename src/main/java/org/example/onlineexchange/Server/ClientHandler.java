@@ -14,10 +14,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Formatter;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientHandler implements Runnable{
     public String name;
@@ -38,6 +35,14 @@ public class ClientHandler implements Runnable{
     private Coin coins[] = new Coin[5];
     private boolean updated[] = {false, false, false, false, false};
 
+    Map<String, Integer> indexGetter = new HashMap<>();
+    {
+        indexGetter.put("USD", 0);
+        indexGetter.put("EUR", 1);
+        indexGetter.put("TOMAN", 2);
+        indexGetter.put("YEN", 3);
+        indexGetter.put("GBP", 4);
+    }
 
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -148,12 +153,12 @@ public class ClientHandler implements Runnable{
                 }
                 continue;
             }
-            System.out.println(input);
+
+
             if (orders[0].equals("[UPDATE]")) {
                 for (int i = 0; !updated[0] || !updated[1] || !updated[2] || !updated[3] || !updated[4]; i++) {
                     i=i%5;
                     if (!updated[i]) {
-                        System.out.println("123");
                         for (int j = 0; j < 4; ) {
                             if (j == 0) {
                                 if (server.getCoins()[i].getPrice() != coins[i].getPrice()) {
@@ -164,7 +169,6 @@ public class ClientHandler implements Runnable{
                                     sender.format("[PRICECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
-                                //System.out.println(input);
                                 orders = input.split(",");
                                 j = Integer.valueOf(orders[1]);
                                 //System.out.println(orders[1]);
@@ -176,7 +180,6 @@ public class ClientHandler implements Runnable{
                                     sender.format("[MAXPRICECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
-                                //System.out.println(input);
                                 orders = input.split(",");
                                 j = Integer.valueOf(orders[1]);
                                 System.out.println(j);
@@ -189,7 +192,6 @@ public class ClientHandler implements Runnable{
                                     sender.format("[PERCENTCHENGECHENGEUPDATED]"+"\n");
                                 }
                                 input = receiver.nextLine();
-                                //System.out.println(input);
                                 orders = input.split(",");
                                 j = Integer.valueOf(orders[1]);
                             } else if (j == 3) {
@@ -202,20 +204,52 @@ public class ClientHandler implements Runnable{
                                     System.out.println("not ok set");
                                 }
                                 input = receiver.nextLine();
-                                //System.out.println(input);
                                 orders = input.split(",");
                                 j = Integer.valueOf(orders[1]);
                             }
                         }
-                        System.out.println(updated);
                         updated[i]=true;
                     }
                 }
-                System.out.println("finish");
+
                 for (int i = 0; i <5; i++) {
                     updated[i]=false;
                 }
             }
+
+            if (Objects.equals(request.getCommand(), "GET PRICE")){
+                sender.format(new Request("SUCCESS",
+                        String.valueOf(server.getCoins()[indexGetter.get(request.getParameter(0))].getPrice())).toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "GET CHART")){
+                ArrayList<double[]> coinsPrice = server.getCoinsPrice();
+                String[] avePrice = new String[16];
+                synchronized (coinsPrice) {
+                    System.out.println(request.toString());
+                    int size = coinsPrice.size();
+                    int coinIndex = indexGetter.get(request.getParameter(0));
+                    System.out.println(request.getParameter(1));
+                    int interval = Integer.parseInt(request.getParameter(1));
+                    for (int i = 0; i < 15; i++) {
+                        int j;
+                        double sum = 0;
+                        for (j = 0; j < interval; j++) {
+                            int index = size - (i * interval + j) - 1;
+                            if (index < 0)break;
+                            sum += coinsPrice.get(index)[coinIndex];
+                        }
+                        avePrice[15 - i] = STR."\{sum / j}";
+                        if (j != interval)break;
+                    }
+                }
+
+                avePrice[0] = server.getTime();
+                sender.format(new Request("SUCCESS", avePrice).toString());
+                continue;
+            }
+
 
         }
 

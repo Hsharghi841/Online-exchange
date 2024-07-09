@@ -96,34 +96,18 @@ public class LoginSceneController implements Initializable {
     }
 
     @FXML
-    protected void loginBtnHandler(){
+    protected void loginBtnHandler(ActionEvent e) throws IOException {
         if(!captchaCheck()){
             printErr("captcha is incorrect");
             return;
         }
 
-//        for(User user : User.allUsers){
-//            if(Objects.equals(user.getUsername(), usernameTxf.getText())){
-//                currentUser = user;
-//                break;
-//            }
-//        }
-
-//        if (currentUser == null){
-//            printErr("User not found");
-//            return;
-//        }
-//
-//        if(!Objects.equals(passwordTxf.getText(), currentUser.getPassword())){
-//            printErr("Password not match");
-//            return;
-//        }
 
         ClientSocket cl = null;
 
         try {
             cl = ClientSocket.getClientSocket();
-        } catch (IOException e) {
+        } catch (IOException e1) {
             printErr("connect field");
             return;
         }
@@ -151,6 +135,10 @@ public class LoginSceneController implements Initializable {
 
 
         System.out.println(STR."hi \{usernameTxf.getText()}");// this part is for forward app to user panel
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("home-page.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
+
     }
 
     @FXML

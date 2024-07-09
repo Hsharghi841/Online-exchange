@@ -17,8 +17,10 @@ public class Server {
     public ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
     ServerSocket serverSocket;
 
-    private Coin coins[] = new Coin[5], temp;
-    private Server server=this;
+    private Coin coins[] = new Coin[5];
+    private Server server = this;
+    ArrayList<double[]> coinsPrice = new ArrayList<>();
+    String time;
 
     public Server() {
 
@@ -66,7 +68,7 @@ public class Server {
                 new Thread(clientHandler).start();
             }
         }).start();
-        new Thread(){
+        new Thread() {
             private String input;
             private String[] orders;
             BufferedReader read;
@@ -84,14 +86,15 @@ public class Server {
                         System.out.println("cant read");
                     }
                 }
-                orders=input.split(",");
-                coins[0].setPrice1(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
-                coins[0].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
-                coins[0].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
+                orders = input.split(",");
+                time = STR."\{orders[1]}";
+                coins[0].setPrice1(Double.parseDouble(orders[4])/(Double.valueOf(orders[2])));
+                coins[0].setMaxprice(Double.parseDouble(orders[4])/(Double.valueOf(orders[2])));
+                coins[0].setMinprice(Double.valueOf(orders[4])/(Double.parseDouble(orders[2])));
                 coins[0].setPercentchenge(0.0);
-                coins[1].setPrice1(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
-                coins[1].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
-                coins[1].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[3])));
+                coins[1].setPrice1(Double.parseDouble(orders[4])/(Double.valueOf(orders[3])));
+                coins[1].setMaxprice(Double.parseDouble(orders[4])/(Double.valueOf(orders[3])));
+                coins[1].setMinprice(Double.valueOf(orders[4])/(Double.parseDouble(orders[3])));
                 coins[1].setPercentchenge(0.0);
                 coins[2].setPrice1(Double.valueOf(orders[4]));
                 coins[2].setMaxprice(Double.valueOf(orders[4]));
@@ -105,6 +108,8 @@ public class Server {
                 coins[4].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                 coins[4].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                 coins[4].setPercentchenge(0.0);
+                coinsPrice.add(new double[]{coins[0].getPrice(), coins[1].getPrice(),
+                        coins[2].getPrice(), coins[3].getPrice(), coins[4].getPrice()});
                 try {
                     sleep(60000);
                 } catch (InterruptedException e) {
@@ -150,6 +155,14 @@ public class Server {
 
     public Coin[] getCoins() {
         return coins;
+    }
+
+    public ArrayList<double[]> getCoinsPrice() {
+        return coinsPrice;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public static void main(String[] args) {

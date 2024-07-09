@@ -23,6 +23,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.Formatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -115,7 +116,7 @@ public class HomepageController implements Initializable {
         coins[2] = new TOMAN();
         coins[3] = new YEN();
         coins[4] = new GBP();
-        Timeline timeline1 =new Timeline(new KeyFrame(Duration.seconds(1),event -> UpDate()));
+        Timeline timeline1 =new Timeline(new KeyFrame(Duration.seconds(1), event -> UpDate()));
         timeline1.setCycleCount(2);
         timeline1.play();
         Timeline timeline =new Timeline(new KeyFrame(Duration.seconds(60),event -> UpDate()));
