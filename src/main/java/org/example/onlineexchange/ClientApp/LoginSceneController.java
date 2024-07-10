@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.onlineexchange.Request;
-import org.example.onlineexchange.User;
+import org.example.onlineexchange.Server.User;
 
 
 import java.io.File;

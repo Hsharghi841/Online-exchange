@@ -29,7 +29,7 @@ public class HomepageController implements Initializable {
 
     private ClientSocket socket;
 
-    private boolean updated = false, sorted[] = {false, false, false, false};
+    private boolean updated = false;
 
     private int numofresive = 0;
     private String input, output;
@@ -96,6 +96,8 @@ public class HomepageController implements Initializable {
     Label MAXPRICE;
     @FXML
     Label MINPRICE;
+    @FXML
+    Label usernameLbl;
 
 
     @Override
@@ -317,6 +319,20 @@ public class HomepageController implements Initializable {
         else if(Objects.equals(tokenName, "GBP(پوند)"))
             ((tokenViewController)fxmlLoader.getController()).init("GBP");
 
+    }
+
+    public void mouseOnUsername(){
+        usernameLbl.setUnderline(true);
+    }
+
+    public void mouseNotOnUsername(){
+        usernameLbl.setUnderline(false);
+    }
+
+    public void usernameMouseClicked(MouseEvent e) throws IOException {
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("profile-view.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 
 }

@@ -1,18 +1,15 @@
 package org.example.onlineexchange.Server;
 
 import org.example.onlineexchange.Coins.*;
-import javafx.scene.control.Alert;
 import org.example.onlineexchange.EmailSender;
 import org.example.onlineexchange.Exceptions.EmailNotFoundException;
 import org.example.onlineexchange.Exceptions.UserNameNotFoundException;
 import org.example.onlineexchange.Request;
-import org.example.onlineexchange.User;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -247,6 +244,46 @@ public class ClientHandler implements Runnable{
 
                 avePrice[0] = server.getTime();
                 sender.format(new Request("SUCCESS", avePrice).toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "PROFILE")){
+                try {
+                    loginedUser = User.getUserFromDatabase(loginedUser.getUsername());
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                }
+                sender.format(new Request("SUCCESS", loginedUser.getFirstName(), loginedUser.getLastName(),
+                        loginedUser.getUsername(), loginedUser.getPhoneNumber(), loginedUser.getEmail(), loginedUser.getPassword()
+                ).toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "SET PHONE")){
+                Database db = Database.getDataBase();
+
+                try {
+                    db.getStatement().execute(STR."UPDATE users SET phoneNumber = '\{request.getParameter(0)}' WHERE id = \{loginedUser.getId()}");
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+                sender.format(new Request("SUCCESS").toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "SET EMAIL")){
+                Database db = Database.getDataBase();
+
+                try {
+                    db.getStatement().execute(STR."UPDATE users SET email = '\{request.getParameter(0)}' WHERE id = \{loginedUser.getId()}");
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+                sender.format(new Request("SUCCESS").toString());
                 continue;
             }
 
