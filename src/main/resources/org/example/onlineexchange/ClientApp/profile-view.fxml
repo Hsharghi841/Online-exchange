@@ -185,6 +185,14 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
+                        <Button layoutX="43.0" layoutY="44.0" mnemonicParsing="false" onAction="#exchangeHandler" prefWidth="107.0" style="-fx-background-color: aqua; -fx-background-radius: 20;" text="exchange" textFill="#ba1692">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>

@@ -20,7 +20,6 @@ public class User {
     private String password;
     private Coin coins[] = new Coin[5], temp;
     private ArrayList<Orders> orders=new ArrayList<>();
-    private Wallet wallet=new Wallet();
 
     private static final Database db = Database.getDataBase();
 
