@@ -101,6 +101,10 @@ public class ExchengPage implements Initializable {
     public void Done(){
         if(True){
             user.orders.add(new Orders(slid.getValue(),Double.valueOf(text.getText()),sell,Coin));
+            if(sell)
+                SellOrders(slid.getValue(),Double.valueOf(text.getText()));
+            else
+                BuyOrders(slid.getValue(),Double.valueOf(text.getText()));
         }
     }
 }
