@@ -74,7 +74,6 @@ public class Server {
             BufferedReader read;
             @Override
             public void run() {
-
                 try {
                     read = new BufferedReader(new FileReader("src/main/java/org/example/onlineexchange/Server/currency_prices.csv"));
                 } catch (FileNotFoundException e) {
@@ -116,7 +115,6 @@ public class Server {
                 } catch (InterruptedException e) {
                     System.out.println("cant sleep in server");
                 }
-
                 for (int j = 0; j <1440; j++){
                     try {
                         input = read.readLine();
@@ -155,7 +153,6 @@ public class Server {
                     }
                     System.out.println(STR."usd price :\{coins[0].getPrice()}");
                 }
-
             }
         }.start();
     }

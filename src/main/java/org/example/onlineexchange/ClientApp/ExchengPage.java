@@ -19,13 +19,16 @@ import java.util.ResourceBundle;
 
 public class ExchengPage implements Initializable {
     User user;
-    boolean True;
+    boolean True,TRUEof;
     boolean sell;
     String Coin;
+    ClientSocket socket;
+    double max,value;
+
     @FXML
     Label Value;
     @FXML
-    Label Error;
+    TextField Error;
     @FXML
     VBox SELL;
     @FXML
@@ -33,7 +36,7 @@ public class ExchengPage implements Initializable {
     @FXML
     ChoiceBox<String> choiceBox;
     @FXML
-    Slider slid;
+    TextField slid;
     @FXML
     TextField text;
 
@@ -46,7 +49,7 @@ public class ExchengPage implements Initializable {
         } catch (IOException e) {
             System.out.println("cant open");
         }
-
+        System.out.println("1245");
     }
 
     public void BuyOrders(double value, double price){
@@ -58,6 +61,7 @@ public class ExchengPage implements Initializable {
         } catch (IOException e) {
             System.out.println("cant open");
         }
+        System.out.println("12345");
 
     }
 
@@ -67,44 +71,62 @@ public class ExchengPage implements Initializable {
         choiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             Coin=newValue;
             if(newValue=="USD") {
-                slid.setMax(user.wallet.getUsd());
+                max=user.wallet.getUsd();
             } else if(newValue=="EUR") {
-                slid.setMax(user.wallet.getEur());
+                max=user.wallet.getEur();
             }else if(newValue=="YEN") {
-                slid.setMax(user.wallet.getYen());
+                max=user.wallet.getYen();
             }else if(newValue=="GBP") {
-                slid.setMax(user.wallet.getGbp());
+                max=user.wallet.getGbp();
             }
+            System.out.println("1265845");
         });
     }
 
     public void Chengevalue(){
-        Value.setText(String.valueOf(slid.getValue()));
+        TRUEof=false;
+        if(Double.valueOf(slid.getText())>0) {
+            value = Double.valueOf(slid.getText());
+            TRUEof=true;
+            System.out.println("111");
+        }
     }
 
     public void check(){
-        True=false;
-        if(Double.valueOf(text.getText())>0){
+        True=true;
+        if(Double.valueOf(Error.getText())>0){
             True=true;
-            Error.setText("این مقدار معتبر است");
+            //te.setText("این مقدار معتبر است");
         }else{
-            Error.setText("این مقدار نا معتبر است");
+            //Error.setText("این مقدار نا معتبر است");
         }
+        System.out.println("123645");
     }
 
     public  void Sell(){
         sell=true;
+        System.out.println("145");
     }
     public  void buy(){
         sell=false;
+        System.out.println("45");
     }
     public void Done(){
-        if(True){
-            user.orders.add(new Orders(slid.getValue(),Double.valueOf(text.getText()),sell,Coin));
+        System.out.println(True);
+        System.out.println(TRUEof);
+        if(True&&TRUEof){
+            try {
+                socket = ClientSocket.getClientSocket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            user.orders.add(new Orders(value,Double.valueOf(Error.getText()),sell,Coin));
             if(sell)
-                SellOrders(slid.getValue(),Double.valueOf(text.getText()));
+                SellOrders(value,Double.valueOf(Error.getText()));
             else
-                BuyOrders(slid.getValue(),Double.valueOf(text.getText()));
+                BuyOrders(value,Double.valueOf(Error.getText()));
+            System.out.println("1236745");
+            ;
         }
     }
 }

@@ -142,7 +142,7 @@ public class profileViewController implements Initializable {
 
     public void exchangeHandler(Event e) throws IOException {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("wallet-view.fxml")).load(),
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("excheng-page.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 }
