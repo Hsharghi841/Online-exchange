@@ -1,7 +1,7 @@
 package org.example.onlineexchange.Server;
 
 import org.example.onlineexchange.Coins.Coin;
-import org.example.onlineexchange.Coins.Orders
+import org.example.onlineexchange.Coins.Orders;
 import org.example.onlineexchange.Exceptions.*;
 
 import java.sql.ResultSet;
