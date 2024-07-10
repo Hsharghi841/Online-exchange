@@ -1,13 +1,41 @@
 package org.example.onlineexchange;
 
 public class Wallet {
-    double mount[]={0,0,0,0};
 
-    public double[] getMount() {
-        return mount;
+    private double usd;
+    private double eur;
+    private double yen;
+    private double gbp;
+
+    public double getUsd() {
+        return usd;
     }
 
-    public void setMount(double[] mount) {
-        this.mount = mount;
+    public void setUsd(double usd) {
+        this.usd = usd;
+    }
+
+    public double getEur() {
+        return eur;
+    }
+
+    public void setEur(double eur) {
+        this.eur = eur;
+    }
+
+    public double getYen() {
+        return yen;
+    }
+
+    public void setYen(double yen) {
+        this.yen = yen;
+    }
+
+    public double getGbp() {
+        return gbp;
+    }
+
+    public void setGbp(double gbp) {
+        this.gbp = gbp;
     }
 }
