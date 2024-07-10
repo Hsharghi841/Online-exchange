@@ -1,11 +1,13 @@
 package org.example.onlineexchange;
 
 import org.example.onlineexchange.Coins.Coin;
+import org.example.onlineexchange.Coins.Orders
 import org.example.onlineexchange.Exceptions.*;
 import org.example.onlineexchange.Server.Database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class User {
 
@@ -17,6 +19,7 @@ public class User {
     private String username;
     private String password;
     private Coin coins[] = new Coin[5], temp;
+    private ArrayList<Orders> orders=new ArrayList<>();
 
     private static final Database db = Database.getDataBase();
 

@@ -45,7 +45,7 @@ public class ExchengPage implements Initializable {
         SellOrders();
         BuyOrders();
         choiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Selected: " + newValue);
+            if()
 
         });
     }

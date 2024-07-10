@@ -6,6 +6,7 @@ public class Coin {
     protected String name;
     protected double price, maxprice, minprice=100000000, percentchenge=1, pastprice = 0;
     protected ArrayList<Double> prices = new ArrayList<>();
+    protected ArrayList<Orders> orders = new ArrayList<>();
 
     public String getName() {
         return name;
