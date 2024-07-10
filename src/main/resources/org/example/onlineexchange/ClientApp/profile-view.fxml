@@ -169,7 +169,7 @@
                   </AnchorPane>
                   <HBox alignment="CENTER" prefWidth="100.0" spacing="50.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="107.0" style="-fx-background-color: aqua; -fx-background-radius: 20;" text="walet" textFill="#ba1692" HBox.hgrow="ALWAYS">
+                        <Button mnemonicParsing="false" onAction="#walletHandler" prefWidth="107.0" style="-fx-background-color: aqua; -fx-background-radius: 20;" text="walet" textFill="#ba1692" HBox.hgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -178,6 +178,14 @@
                            </font>
                         </Button>
                         <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="107.0" style="-fx-background-color: aqua; -fx-background-radius: 20;" text="history" textFill="#ba1692" HBox.hgrow="ALWAYS">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="43.0" layoutY="44.0" mnemonicParsing="false" onAction="#exchangeHandler" prefWidth="107.0" style="-fx-background-color: aqua; -fx-background-radius: 20;" text="exchange" textFill="#ba1692">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

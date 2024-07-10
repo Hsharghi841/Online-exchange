@@ -287,6 +287,46 @@ public class ClientHandler implements Runnable{
                 continue;
             }
 
+            if(Objects.equals(request.getCommand(), "TOTAL ASSETS")){
+                try {
+                    loginedUser = User.getUserFromDatabase(loginedUser.getUsername());
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+                double result = 0;
+
+                result += loginedUser.wallet.getUsd() * server.getCoins()[0].getPrice();
+                result += loginedUser.wallet.getEur() * server.getCoins()[1].getPrice();
+                result += loginedUser.wallet.getYen() * server.getCoins()[3].getPrice();
+                result += loginedUser.wallet.getGbp() * server.getCoins()[4].getPrice();
+
+                sender.format(new Request("SUCCESS", String.valueOf(result)).toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "GET WALLET")){
+
+                try {
+                    loginedUser = User.getUserFromDatabase(loginedUser.getUsername());
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+                sender.format(new Request("SUCCESS", STR."\{loginedUser.wallet.getUsd()}",
+                        STR."\{loginedUser.wallet.getUsd()}", STR."\{loginedUser.wallet.getUsd()}",
+                        STR."\{loginedUser.wallet.getUsd()}").toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "UPDATE ORDERS")){
+                Orders o = new Orders(Integer.parseInt(request.getParameter(0)), Integer.parseInt(request.getParameter(1)),
+                        Boolean.parseBoolean(request.getParameter(2)), request.getParameter(3));
+            }
+
+
 
         }
 
