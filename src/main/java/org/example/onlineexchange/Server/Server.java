@@ -74,6 +74,7 @@ public class Server {
             BufferedReader read;
             @Override
             public void run() {
+
                 try {
                     read = new BufferedReader(new FileReader("src/main/java/org/example/onlineexchange/Server/currency_prices.csv"));
                 } catch (FileNotFoundException e) {
@@ -111,10 +112,11 @@ public class Server {
                 coinsPrice.add(new double[]{coins[0].getPrice(), coins[1].getPrice(),
                         coins[2].getPrice(), coins[3].getPrice(), coins[4].getPrice()});
                 try {
-                    sleep(60000);
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     System.out.println("cant sleep in server");
                 }
+
                 for (int j = 0; j <1440; j++){
                     try {
                         input = read.readLine();
@@ -122,6 +124,7 @@ public class Server {
                     } catch (IOException e) {
                         System.out.println("cant read");
                     }
+                    time = STR."\{orders[1]}";
                     orders=input.split(",");
                     coins[0].setPrice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
                     coins[0].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[2])));
@@ -143,12 +146,16 @@ public class Server {
                     coins[4].setMaxprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                     coins[4].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                     coins[4].setPercentchenge((coins[4].getPrice()-coins[4].getPastprice())*100/coins[4].getPastprice());
+                    coinsPrice.add(new double[]{coins[0].getPrice(), coins[1].getPrice(),
+                            coins[2].getPrice(), coins[3].getPrice(), coins[4].getPrice()});
                     try {
                         sleep(1000);
                     } catch (InterruptedException e) {
                         System.out.println("cant sleep in server in loop");
                     }
+                    System.out.println(STR."usd price :\{coins[0].getPrice()}");
                 }
+
             }
         }.start();
     }

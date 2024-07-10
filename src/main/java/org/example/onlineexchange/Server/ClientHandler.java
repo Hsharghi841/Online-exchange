@@ -316,8 +316,8 @@ public class ClientHandler implements Runnable{
                 }
 
                 sender.format(new Request("SUCCESS", STR."\{loginedUser.wallet.getUsd()}",
-                        STR."\{loginedUser.wallet.getUsd()}", STR."\{loginedUser.wallet.getUsd()}",
-                        STR."\{loginedUser.wallet.getUsd()}").toString());
+                        STR."\{loginedUser.wallet.getEur()}", STR."\{loginedUser.wallet.getYen()}",
+                        STR."\{loginedUser.wallet.getGbp()}").toString());
                 continue;
             }
 

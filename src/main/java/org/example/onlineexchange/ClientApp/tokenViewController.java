@@ -70,7 +70,7 @@ public class tokenViewController implements Initializable {
         cl.send(new Request("GET PRICE", tokenNameLbl.getText()).toString());
         Request result = Request.requestProcessor(cl.receive());
         if (!Objects.equals(result.getCommand(), "SUCCESS"))return;
-        tokenPriceLbl.setText(result.getParameter(0));
+        tokenPriceLbl.setText(STR."\{Math.round(Double.parseDouble(result.getParameter(0)))}");
 
         cl.send(new Request("GET CHART", tokenNameLbl.getText(), STR."\{interval}").toString());
         result = Request.requestProcessor(cl.receive());
@@ -85,6 +85,30 @@ public class tokenViewController implements Initializable {
             series.getData().add(new XYChart.Data<>(time.minusMinutes((long) (15 - i) * interval).format(DateTimeFormatter.ofPattern("HH:mm:ss")),
                     Double.parseDouble(value)));
         }
+
+        int n = 15;
+        double sumX = 0.0, sumY = 0.0, sumXY = 0.0, sumX2 = 0.0;
+
+        for (int i = 1; i <= n; i++) {
+            String value = result.getParameter(i);
+            if(Objects.equals(value, "null"))value = "0.0";
+            sumX += i;
+            sumY += Double.parseDouble(value);
+            sumXY += i * Double.parseDouble(value);
+            sumX2 += i * i;
+        }
+
+        double xMean = sumX / n;
+        double yMean = sumY / n;
+
+        double slope = (sumXY - sumX * yMean) / (sumX2 - sumX * xMean);
+        double intercept = yMean - slope * xMean;
+
+        double next = intercept + slope * 16;
+
+        series.getData().add(new XYChart.Data<>("future", next));
+
+        System.out.println("chart change");
 
     }
 

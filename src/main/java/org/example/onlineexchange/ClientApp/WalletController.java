@@ -47,7 +47,7 @@ public class WalletController implements Initializable {
 
         totalAssets.setText(r.getParameter(0));
 
-        cs.send(new Request("TOTAL ASSETS").toString());
+        cs.send(new Request("GET WALLET").toString());
 
         r = Request.requestProcessor(cs.receive());
 
