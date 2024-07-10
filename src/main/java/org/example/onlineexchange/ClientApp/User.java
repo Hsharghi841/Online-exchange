@@ -30,7 +30,6 @@ public class User {
         setEmail(email);
         setUsername(username);
         setPassword(password);
-        user
     }
 
     private User(){};
