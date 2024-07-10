@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.onlineexchange.ClientApp.ExchengPage">
    <children>
       <ScrollPane fitToWidth="true" layoutX="209.0" layoutY="64.0" prefHeight="235.0" prefWidth="191.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
@@ -44,11 +43,10 @@
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <HBox layoutX="6.0" layoutY="169.0" prefHeight="31.0" prefWidth="179.0" />
       <Button layoutX="21.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Button" />
       <Button layoutX="96.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Button" />
       <Slider layoutX="26.0" layoutY="90.0" max="200.0" value="50.0" />
-      <ChoiceBox value="USD" layoutX="21.0" layoutY="65.0" prefWidth="150.0" >
+      <ChoiceBox fx:id="choiceBox" layoutX="21.0" layoutY="65.0" prefWidth="150.0" value="USD">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="USD" />

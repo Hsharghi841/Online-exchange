@@ -1,5 +1,6 @@
 package org.example.onlineexchange.ClientApp;
 
+import javafx.css.converter.StringConverter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,8 +44,10 @@ public class ExchengPage implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SellOrders();
         BuyOrders();
+        choiceBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if()
+
+        });
     }
 
-    public void maxofsl(){
-    }
 }
