@@ -144,10 +144,11 @@ public class Server {
                     coins[4].setMinprice(Double.valueOf(orders[4])/(Double.valueOf(orders[6])));
                     coins[4].setPercentchenge((coins[4].getPrice()-coins[4].getPastprice())*100/coins[4].getPastprice());
                     try {
-                        sleep(1000);
+                        sleep(60000);
                     } catch (InterruptedException e) {
                         System.out.println("cant sleep in server in loop");
                     }
+
                 }
             }
         }.start();
