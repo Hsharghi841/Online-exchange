@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.onlineexchange.Coins.*;
+import org.example.onlineexchange.Request;
 
 import java.io.IOException;
 import java.net.URL;
@@ -120,6 +121,19 @@ public class HomepageController implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(60), event -> UpDate()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+
+        socket.send(new Request("PROFILE").toString());
+
+        Request result = Request.requestProcessor(socket.receive());
+        if(!Objects.equals(result.getCommand(), "SUCCESS"))return;
+
+
+        User.user = new User(result.getParameter(0), result.getParameter(1), result.getParameter(3),
+                result.getParameter(4), result.getParameter(2), result.getParameter(5));
+
+
+
     }
 
     public void UpDate() {

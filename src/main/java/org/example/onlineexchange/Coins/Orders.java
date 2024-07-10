@@ -4,16 +4,23 @@ package org.example.onlineexchange.Coins;
 import org.example.onlineexchange.ClientApp.User;
 
 public class Orders {
-    int Value,Price;
+    double Value,Price;
     User seller,buyer;
     boolean sell,finish;
     Coin coin;
 
-    public Orders(int value, int price, boolean sell, Coin coin) {
+    public Orders(double value, double price, boolean sell, String coin) {
         Value = value;
         Price = price;
         this.sell = sell;
-        this.coin = coin;
+        if(coin=="USD")
+            this.coin = new USD();
+        if(coin=="EUR")
+            this.coin = new EUR();
+        if(coin=="YEN")
+            this.coin = new YEN();
+        if(coin=="GBP")
+            this.coin = new GBP();
         finish=false;
     }
 }
