@@ -133,4 +133,10 @@ public class profileViewController implements Initializable {
         stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("profile-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
+
+    public void walletHandler() throws IOException {
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("wallet-view.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
+    }
 }

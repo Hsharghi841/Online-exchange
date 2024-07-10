@@ -3,6 +3,7 @@ package org.example.onlineexchange.Server;
 import org.example.onlineexchange.Coins.Coin;
 import org.example.onlineexchange.Coins.Orders;
 import org.example.onlineexchange.Exceptions.*;
+import org.example.onlineexchange.Wallet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +22,8 @@ public class User {
     private ArrayList<Orders> orders=new ArrayList<>();
 
     private static final Database db = Database.getDataBase();
+
+    public Wallet wallet = new Wallet();
 
     public User(String firstName, String lastName, String phoneNumber, String email, String username, String password) {
         setFirstName(firstName);
@@ -109,6 +112,10 @@ public class User {
         db.getStatement().execute(
                 "INSERT INTO users (firstName, lastName, phoneNumber, email, username, password)" +
                 STR."VALUES ('\{user.firstName}', '\{user.lastName}', '\{user.phoneNumber}', '\{user.email}', '\{user.username}', '\{user.password}')");
+        ResultSet r = db.getStatement().executeQuery(STR."SELECT id FROM users WHERE username = '\{user.username}'");
+        r.next();
+        user.id = r.getInt("id");
+        db.getStatement().execute(STR."INSERT INTO wallet (user_id, usd, eur, yen, gbp)\nVALUES (\{user.id}, \{user.wallet.getUsd()} ,\{user.wallet.getEur()} ,\{user.wallet.getYen()} ,\{user.wallet.getGbp()});");
     }
 
     public static User getUserFromDatabase(String username) throws SQLException {
@@ -122,6 +129,14 @@ public class User {
         result.email = r.getString("email");
         result.username = r.getString("username");
         result.password = r.getString("password");
+
+        r = db.getStatement().executeQuery(STR."SELECT * FROM wallet WHERE user_id = \{result.id}");
+        r.next();
+        result.wallet.setUsd(r.getDouble("usd"));
+        result.wallet.setEur(r.getDouble("eur"));
+        result.wallet.setYen(r.getDouble("yen"));
+        result.wallet.setGbp(r.getDouble("gbp"));
+
         return result;
     }
 
