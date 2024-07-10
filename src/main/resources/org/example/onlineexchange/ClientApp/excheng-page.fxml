@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -43,9 +44,9 @@
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <Button layoutX="21.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Button" />
-      <Button layoutX="96.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Button" />
-      <Slider layoutX="26.0" layoutY="90.0" max="200.0" value="50.0" />
+      <Button layoutX="21.0" layoutY="37.0" mnemonicParsing="false" onDragDone="#buy" prefHeight="25.0" prefWidth="74.0" text="buy" />
+      <Button layoutX="96.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#Sell" prefHeight="25.0" prefWidth="74.0" text="sell" />
+      <Slider fx:id="slid" layoutX="26.0" layoutY="90.0" max="200.0" onScroll="#Chengevalue" value="50.0" />
       <ChoiceBox fx:id="choiceBox" layoutX="21.0" layoutY="65.0" prefWidth="150.0" value="USD">
          <items>
             <FXCollections fx:factory="observableArrayList">
@@ -56,5 +57,10 @@
             </FXCollections>
          </items>
       </ChoiceBox>
+      <Label fx:id="Value" alignment="CENTER" layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="text" layoutX="21.0" layoutY="154.0" />
+      <Label alignment="CENTER" layoutX="21.0" layoutY="129.0" prefHeight="25.0" prefWidth="150.0" text="قیمت هر تک ارز" />
+      <Button layoutX="69.0" layoutY="222.0" mnemonicParsing="false" text="Done" />
+      <Label fx:id="Error" alignment="CENTER" layoutX="22.0" layoutY="182.0" prefHeight="17.0" prefWidth="149.0" />
    </children>
 </AnchorPane>

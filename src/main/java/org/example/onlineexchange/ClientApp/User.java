@@ -1,11 +1,14 @@
 package org.example.onlineexchange.ClientApp;
 
 import org.example.onlineexchange.Coins.Coin;
+import org.example.onlineexchange.Coins.Orders;
 import org.example.onlineexchange.Exceptions.*;
 import org.example.onlineexchange.Server.Database;
+import org.example.onlineexchange.Wallet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class User {
 
@@ -16,6 +19,9 @@ public class User {
     private String email;
     private String username;
     private String password;
+    public ArrayList<Orders> orders=new ArrayList<>();
+    public Wallet wallet=new Wallet();
+    public static User user;
 
     public User(String firstName, String lastName, String phoneNumber, String email, String username, String password) {
         setFirstName(firstName);
@@ -24,6 +30,7 @@ public class User {
         setEmail(email);
         setUsername(username);
         setPassword(password);
+        user
     }
 
     private User(){};

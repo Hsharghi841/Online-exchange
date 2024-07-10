@@ -3,6 +3,7 @@ package org.example.onlineexchange.Server;
 import org.example.onlineexchange.Coins.Coin;
 import org.example.onlineexchange.Coins.Orders;
 import org.example.onlineexchange.Exceptions.*;
+import org.example.onlineexchange.Wallet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class User {
     private String password;
     private Coin coins[] = new Coin[5], temp;
     private ArrayList<Orders> orders=new ArrayList<>();
+    private Wallet wallet=new Wallet();
 
     private static final Database db = Database.getDataBase();
 
