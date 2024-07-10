@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -326,7 +327,33 @@ public class ClientHandler implements Runnable{
                         Boolean.parseBoolean(request.getParameter(2)), request.getParameter(3));
             }
 
+            if(Objects.equals(request.getCommand(), "GET ADMIN")){
 
+                Database db = Database.getDataBase();
+                ResultSet r;
+                try {
+                    r = db.getStatement().executeQuery("SELECT u.username, w.usd, w.eur, w.yen, w.gbp FROM wallet w JOIN users u ON w.user_id = u.id");
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+                ArrayList<String> a = new ArrayList<>();
+
+                try {
+                    while (r.next()) {
+                        a.add(r.getString(0));
+                        a.add(r.getString(1));
+                        a.add(r.getString(2));
+                        a.add(r.getString(3));
+                        a.add(r.getString(4));
+                    }
+                }catch (SQLException e){
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+            }
 
         }
 
