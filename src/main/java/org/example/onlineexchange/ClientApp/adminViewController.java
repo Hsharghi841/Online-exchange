@@ -26,8 +26,21 @@ public class adminViewController implements Initializable {
         cs.send(new Request("GET ADMIN").toString());
 
         Request r = Request.requestProcessor(cs.receive());
+        int i = 0;
+        while (true){
+            try {
+                try {
+                    HBox child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
+                } catch (IOException e) {
+                    System.out.println("cant open");
+                }
+
+            }catch (RuntimeException e){
+
+            }
 
 
+        }
 
         try {
             HBox child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
