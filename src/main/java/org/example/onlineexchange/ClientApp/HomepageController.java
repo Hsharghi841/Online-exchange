@@ -35,7 +35,7 @@ public class HomepageController implements Initializable {
     private int numofresive = 0;
     private String input, output;
     private String[] orders;
-    private Coin coins[] = new Coin[5], temp;
+    public static Coin coins[] = new Coin[5], temp;
     private int numcoinselection;
     @FXML
     Label USDPRICE;

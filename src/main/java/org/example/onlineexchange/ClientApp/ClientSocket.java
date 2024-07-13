@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ClientSocket {
 
     private static int defaultPort = 8080;
-    private static String defaultIP = "192.168.48.241";
+    private static String defaultIP = "localhost";
 
     private static ClientSocket cl;
 

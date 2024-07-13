@@ -42,11 +42,7 @@ public class adminViewController implements Initializable {
 
         }
 
-        try {
-            HBox child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
-        } catch (IOException e) {
-            System.out.println("cant open");
-        }
+
 
 
 
