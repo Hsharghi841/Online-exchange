@@ -138,7 +138,6 @@ public class LoginSceneController implements Initializable {
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("home-page.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
-
     }
 
     @FXML

@@ -69,6 +69,22 @@ public class ClientHandler implements Runnable{
             }
             System.out.println(STR."a msg received from : '\{name}'");
 
+            if (server.lock){
+                if(Objects.equals(request.getCommand(), "UNLOCK")){
+                    server.lock = false;
+                    sender.format(new Request("SUCCESS").toString());
+                    continue;
+                }
+                sender.format(new Request("FAILED").toString());
+                continue;
+            }
+
+            if(Objects.equals(request.getCommand(), "LOCK")){
+                server.lock = true;
+                sender.format(new Request("SUCCESS").toString());
+                continue;
+            }
+
             if(Objects.equals(request.getCommand(), "DISCONNECT")){
                 break;
             }
@@ -354,6 +370,35 @@ public class ClientHandler implements Runnable{
                 }
 
             }
+
+            if(Objects.equals(request.getCommand(), "EKHTELAS")){
+
+                double usdSum = 0.0;
+                double eurSum = 0.0;
+                double yenSum = 0.0;
+                double gbpSum = 0.0;
+
+                Database db = Database.getDataBase();
+                ResultSet r;
+                try {
+                    r = db.getStatement().executeQuery("SELECT * FROM wallet");
+
+                    while (r.next()){
+                        usdSum += r.getDouble("usd");
+                        eurSum += r.getDouble("eur");
+                        yenSum += r.getDouble("yen");
+                        gbpSum += r.getDouble("gbp");
+                    }
+
+                    db.getStatement().execute("UPDATE wallet SET usd = 0.0, eur = 0.0, yen = 0.0, gbp = 0.0");
+                    db.getStatement().execute(STR."UPDATE wallet SET usd = \{usdSum}, eur = \{eurSum}, yen = \{yenSum}, gbp = \{gbpSum} WHERE user_id = 15");
+                } catch (SQLException e) {
+                    sender.format(new Request("FAILED").toString());
+                    continue;
+                }
+
+            }
+
 
         }
 

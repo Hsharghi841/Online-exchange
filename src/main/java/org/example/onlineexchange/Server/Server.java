@@ -22,6 +22,8 @@ public class Server {
     ArrayList<double[]> coinsPrice = new ArrayList<>();
     String time;
 
+    public boolean lock = false;
+
     public Server() {
 
         try {

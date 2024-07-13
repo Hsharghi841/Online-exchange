@@ -1,10 +1,17 @@
 package org.example.onlineexchange.ClientApp;
 
+import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.onlineexchange.Request;
 
 import java.io.IOException;
@@ -14,9 +21,16 @@ import java.util.ResourceBundle;
 public class adminViewController implements Initializable {
 
 
+    @FXML
+    VBox v;
+    @FXML
+    Button bazarBtn;
+
+    ClientSocket cs;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ClientSocket cs = null;
+
         try {
             cs = ClientSocket.getClientSocket();
         } catch (IOException e) {
@@ -29,11 +43,16 @@ public class adminViewController implements Initializable {
         int i = 0;
         while (true){
             try {
+                HBox child = null;
                 try {
-                    HBox child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
+                    child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
                 } catch (IOException e) {
                     System.out.println("cant open");
                 }
+
+                v.getChildren().add(child);
+
+                i++;
 
             }catch (RuntimeException e){
 
@@ -42,15 +61,23 @@ public class adminViewController implements Initializable {
 
         }
 
-        try {
-            HBox child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
-        } catch (IOException e) {
-            System.out.println("cant open");
-        }
 
+    }
 
+    public void ekhtelasHandler(){
+        cs.send(new Request("EKHTELAS").toString());
 
+        Request r = Request.requestProcessor(cs.receive());
 
+    }
 
+    public void bazarHandler(){
+
+    }
+
+    public void backHandler(Event e) throws IOException {
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("home-page.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
 }

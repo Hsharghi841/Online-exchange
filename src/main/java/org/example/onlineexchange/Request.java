@@ -38,4 +38,8 @@ public class Request{
     public String getParameter(int i) {
         return parameters[i];
     }
+
+    public int getParameterSize(){
+        return parameters.length;
+    }
 }
