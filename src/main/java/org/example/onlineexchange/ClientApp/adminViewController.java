@@ -72,6 +72,11 @@ public class adminViewController implements Initializable {
     }
 
     public void bazarHandler(){
+        if(bazarBtn.getText() == "بستن بازار"){
+
+        }
+
+
 
     }
 
