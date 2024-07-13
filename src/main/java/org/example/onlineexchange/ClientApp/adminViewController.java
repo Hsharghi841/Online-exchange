@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.example.onlineexchange.Request;
 
@@ -38,29 +39,29 @@ public class adminViewController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        cs.send(new Request("GET ADMIN").toString());
-
-        Request r = Request.requestProcessor(cs.receive());
-        int i = 0;
-        while (true){
-            try {
-                HBox child = null;
-                try {
-                    child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
-                } catch (IOException e) {
-                    System.out.println("cant open");
-                }
-
-                v.getChildren().add(child);
-
-                i++;
-
-            }catch (RuntimeException e){
-
-            }
-
-
-        }
+//        cs.send(new Request("GET ADMIN").toString());
+//
+//        Request r = Request.requestProcessor(cs.receive());
+//        int i = 0;
+//        while (true){
+//            try {
+//                HBox child = null;
+//                try {
+//                    child = new FXMLLoader(ClientApplication.class.getResource("admim-list.fxml")).load();
+//                } catch (IOException e) {
+//                    System.out.println("cant open");
+//                }
+//
+//                v.getChildren().add(child);
+//
+//                i++;
+//
+//            }catch (RuntimeException e){
+//
+//            }
+//
+//
+//        }
 
 
     }
@@ -78,11 +79,20 @@ public class adminViewController implements Initializable {
             cs.send(new Request("LOCK").toString());
 
             Request r = Request.requestProcessor(cs.receive());
-            if()
-
+            if(Objects.equals(r.getCommand(), "SUCCESS")){
+                bazarBtn.setText("باز کردن بازار");
+                bazarBtn.setTextFill(Color.GREEN);
+            }
+            return;
         }
 
+        cs.send(new Request("UNLOCK").toString());
 
+        Request r = Request.requestProcessor(cs.receive());
+        if(Objects.equals(r.getCommand(), "SUCCESS")){
+            bazarBtn.setText("بستن بازار");
+            bazarBtn.setTextFill(Color.RED);
+        }
 
     }
 

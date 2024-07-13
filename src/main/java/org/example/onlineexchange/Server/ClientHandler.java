@@ -72,6 +72,7 @@ public class ClientHandler implements Runnable{
                 if(Objects.equals(request.getCommand(), "UNLOCK")){
                     server.lock = false;
                     sender.format(new Request("SUCCESS").toString());
+                    System.out.println("unlocked");
                     continue;
                 }
                 sender.format(new Request("FAILED").toString());
@@ -81,6 +82,7 @@ public class ClientHandler implements Runnable{
             if(Objects.equals(request.getCommand(), "LOCK")){
                 server.lock = true;
                 sender.format(new Request("SUCCESS").toString());
+                System.out.println("locked");
                 continue;
             }
 
@@ -101,7 +103,6 @@ public class ClientHandler implements Runnable{
                     sender.format(new Request("USER NOT FOUND").toString());
                     continue;
                 }
-
                 if(Objects.equals(requestedUser.getPassword(), request.getParameter(1))){
                     loginedUser = requestedUser;
                     System.out.println(STR."\{loginedUser.getFirstName()} \{loginedUser.getLastName()} logined");
@@ -396,6 +397,20 @@ public class ClientHandler implements Runnable{
                     sender.format(new Request("FAILED").toString());
                     continue;
                 }
+
+            }
+
+            if(Objects.equals(request.getCommand(), "SWAP")){
+                Database db = Database.getDataBase();
+
+
+                try {
+                    db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)}, \{request.getParameter(3)} where user_id = \{loginedUser.getId()}" );
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{request.getParameter()}");
 
             }
 

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -99,6 +100,8 @@ public class HomepageController implements Initializable {
     Label MINPRICE;
     @FXML
     Label usernameLbl;
+    @FXML
+    AnchorPane anchorPane;
 
 
     @Override
@@ -133,6 +136,23 @@ public class HomepageController implements Initializable {
                 result.getParameter(4), result.getParameter(2), result.getParameter(5));
 
 
+        if (Objects.equals(User.user.getUsername(), "admin")){
+
+            Button b = new Button("admin panel");
+            b.setOnAction(e -> {
+                Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+                try {
+                    stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("admin-view.fxml")).load(),
+                            stage.getScene().getWidth(), stage.getScene().getHeight()));
+                    timeline.stop();
+                    timeline1.stop();
+                } catch (IOException e1) {
+                    throw new RuntimeException(e1);
+                }
+            });
+
+            anchorPane.getChildren().add(b);
+        }
 
     }
 

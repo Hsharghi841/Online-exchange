@@ -153,7 +153,7 @@ public class Server {
                     } catch (InterruptedException e) {
                         System.out.println("cant sleep in server in loop");
                     }
-                    System.out.println(STR."usd price :\{coins[0].getPrice()}");
+//                    System.out.println(STR."usd price :\{coins[0].getPrice()}");
                 }
             }
         }.start();
