@@ -16,6 +16,7 @@ import org.example.onlineexchange.Request;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class adminViewController implements Initializable {
@@ -72,7 +73,12 @@ public class adminViewController implements Initializable {
     }
 
     public void bazarHandler(){
-        if(bazarBtn.getText() == "بستن بازار"){
+        if(Objects.equals(bazarBtn.getText(), "بستن بازار")){
+
+            cs.send(new Request("LOCK").toString());
+
+            Request r = Request.requestProcessor(cs.receive());
+            if()
 
         }
 

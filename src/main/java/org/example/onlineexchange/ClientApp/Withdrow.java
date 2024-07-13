@@ -11,12 +11,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Withdrow {
 
     boolean done;
     double from;
-    User user=User.user;
+    User user = User.user;
     @FXML
     TextField textfield;
     @FXML
@@ -27,37 +28,39 @@ public class Withdrow {
     Label value;
 
     public void WITHHandler(Event e) throws IOException {
-        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("wallet-view.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
-    public void valuefrom(){
-        done=false;
-        if(choiceBox1.getValue()=="USD"){
-            if(Double.valueOf(textfield.getText())>0&&Double.valueOf(textfield.getText())<user.value[1]){
-                if(choiceBox2.getValue()=="USD"){
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[0].getPrice()*0.99)/HomepageController.coins[0].getPrice()));
-                } else if (choiceBox2.getValue()=="EUR") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[0].getPrice()*0.99)/HomepageController.coins[1].getPrice()));
-                }else if (choiceBox2.getValue()=="YEN") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[0].getPrice()*0.99)/HomepageController.coins[3].getPrice()));
-                }else if (choiceBox2.getValue()=="GBP") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[0].getPrice()*0.99)/HomepageController.coins[4].getPrice()));
+
+    public void valuefrom() {
+        done = false;
+        if (Objects.equals(choiceBox1.getValue(), "USD")) {
+            if (Double.valueOf(textfield.getText()) > 0 && Double.valueOf(textfield.getText()) < user.value[1]) {
+                if (Objects.equals(choiceBox2.getValue(), "USD")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[0].getPrice() * 0.99) / HomepageController.coins[0].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "EUR")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[0].getPrice() * 0.99) / HomepageController.coins[1].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "YEN")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[0].getPrice() * 0.99) / HomepageController.coins[3].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "GBP")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[0].getPrice() * 0.99) / HomepageController.coins[4].getPrice()));
                 }
-                done=true;
+                done = true;
             }
-        }else if(choiceBox1.getValue()=="EUR"){
-            if(Double.valueOf(textfield.getText())>0&&Double.valueOf(textfield.getText())<user.value[2]){
-                if(choiceBox2.getValue()=="USD"){
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[1].getPrice()*0.99)/HomepageController.coins[0].getPrice()));
-                } else if (choiceBox2.getValue()=="EUR") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[1].getPrice()*0.99)/HomepageController.coins[1].getPrice()));
-                }else if (choiceBox2.getValue()=="YEN") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[1].getPrice()*0.99)/HomepageController.coins[3].getPrice()));
-                }else if (choiceBox2.getValue()=="GBP") {
-                    value.setText(String.valueOf((Double.valueOf(textfield.getText())*HomepageController.coins[1].getPrice()*0.99)/HomepageController.coins[4].getPrice()));
+        } else if (Objects.equals(choiceBox1.getValue(), "EUR")) {
+            if (Double.valueOf(textfield.getText()) > 0 && Double.valueOf(textfield.getText()) < user.value[2]) {
+                if (Objects.equals(choiceBox2.getValue(), "USD")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[1].getPrice() * 0.99) / HomepageController.coins[0].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "EUR")) {
+                    System.out.println("123");
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[1].getPrice() * 0.99) / HomepageController.coins[1].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "YEN")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[1].getPrice() * 0.99) / HomepageController.coins[3].getPrice()));
+                } else if (Objects.equals(choiceBox2.getValue(), "GBP")) {
+                    value.setText(String.valueOf((Double.valueOf(textfield.getText()) * HomepageController.coins[1].getPrice() * 0.99) / HomepageController.coins[4].getPrice()));
                 }
-                done=true;
+                done = true;
             }
         }
     }
