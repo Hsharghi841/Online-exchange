@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class ExchengPage implements Initializable {
     User user;
-    boolean True,TRUEof;
+    boolean True=true,TRUEof=true;
     boolean sell;
     String Coin;
     ClientSocket socket;
@@ -84,7 +84,7 @@ public class ExchengPage implements Initializable {
     }
 
     public void Chengevalue(){
-        TRUEof=false;
+        TRUEof=true;
         if(Double.valueOf(slid.getText())>0) {
             value = Double.valueOf(slid.getText());
             TRUEof=true;

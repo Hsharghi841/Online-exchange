@@ -22,6 +22,8 @@ public class User {
     public ArrayList<Orders> orders=new ArrayList<>();
     public Wallet wallet=new Wallet();
     public static User user;
+    public double Value[]=new double[5];
+    public double value[]=new double[5];
 
     public User(String firstName, String lastName, String phoneNumber, String email, String username, String password) {
         setFirstName(firstName);
@@ -30,6 +32,7 @@ public class User {
         setEmail(email);
         setUsername(username);
         setPassword(password);
+        user=this;
     }
 
     private User(){};

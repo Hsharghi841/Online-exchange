@@ -41,7 +41,6 @@ public class ClientHandler implements Runnable{
         indexGetter.put("YEN", 3);
         indexGetter.put("GBP", 4);
     }
-
     ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
@@ -315,6 +314,7 @@ public class ClientHandler implements Runnable{
                 double result = 0;
 
                 result += loginedUser.wallet.getUsd() * server.getCoins()[0].getPrice();
+                result += loginedUser.wallet.getEur() * server.getCoins()[1].getPrice();
                 result += loginedUser.wallet.getEur() * server.getCoins()[1].getPrice();
                 result += loginedUser.wallet.getYen() * server.getCoins()[3].getPrice();
                 result += loginedUser.wallet.getGbp() * server.getCoins()[4].getPrice();

@@ -4,8 +4,17 @@ public class Wallet {
 
     private double usd;
     private double eur;
+    private double Toman;
     private double yen;
     private double gbp;
+
+    public double getToman() {
+        return Toman;
+    }
+
+    public void setToman(double toman) {
+        Toman = toman;
+    }
 
     public double getUsd() {
         return usd;
