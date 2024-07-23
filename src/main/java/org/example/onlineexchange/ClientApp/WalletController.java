@@ -77,4 +77,10 @@ public class WalletController implements Initializable {
         stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("withdrow.fxml")).load(),
                 stage.getScene().getWidth(), stage.getScene().getHeight()));
     }
+
+    public void transfer(Event e) throws IOException {
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(new FXMLLoader(ClientApplication.class.getResource("transfer.fxml")).load(),
+                stage.getScene().getWidth(), stage.getScene().getHeight()));
+    }
 }

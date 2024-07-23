@@ -403,17 +403,104 @@ public class ClientHandler implements Runnable{
             if(Objects.equals(request.getCommand(), "SWAP")){
                 Database db = Database.getDataBase();
 
-
+                ResultSet r;
                 try {
-                    db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)}, \{request.getParameter(3)} where user_id = \{loginedUser.getId()}" );
+                    r = db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)}, \{request.getParameter(3)} FROM wallet WHERE user_id = \{loginedUser.getId()}" );
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{request.getParameter()}");
+                double f;
+                double s;
+                try {
+                    r.next();
+                    f = r.getDouble(request.getParameter(1));
+                    s = r.getDouble(request.getParameter(3));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
+                f -= Double.parseDouble(request.getParameter(0));
+                s += Double.parseDouble(request.getParameter(2));
+                double t = 0;
+                try {
+                    db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{f}, \{request.getParameter(3)} = \{s} WHERE user_id = \{loginedUser.getId()}");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    ResultSet r2 = db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)} FROM wallet WHERE user_id = 15");
+                    r2.next();
+                    t = r2.getDouble(request.getParameter(1));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                t += Double.parseDouble(request.getParameter(4));
+                try {
+                    db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{t} WHERE user_id = 15");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                continue;
             }
 
+            if(Objects.equals(request.getCommand(), "TRANSFER")){
+                Database db = Database.getDataBase();
+
+                ResultSet r;
+                try {
+                    r = db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)} FROM wallet WHERE user_id = \{loginedUser.getId()}" );
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                double f;
+                try {
+                    r.next();
+                    f = r.getDouble(request.getParameter(1));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                f -= Double.parseDouble(request.getParameter(0));
+                double t = 0;
+                try {
+                    db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{f} WHERE user_id = \{loginedUser.getId()}");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    ResultSet r2 = db.getStatement().executeQuery(STR."SELECT \{request.getParameter(1)} FROM wallet WHERE user_id = 15");
+                    r2.next();
+                    t = r2.getDouble(request.getParameter(1));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                t += Double.parseDouble(request.getParameter(4));
+                try {
+                    db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{t} WHERE user_id = 15");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    ResultSet r3 = db.getStatement().executeQuery(STR."SELECT w.\{request.getParameter(1)}, u.id FROM users u JOIN wallet w ON u.id = w.user_id WHERE u.username = '\{request.getParameter(2)}'");
+                    r3.next();
+                    double s = r3.getDouble(request.getParameter(1));
+                    int id = r3.getInt("id");
+
+                    s += Double.parseDouble(request.getParameter(0));
+
+                    db.getStatement().execute(STR."UPDATE wallet SET \{request.getParameter(1)} = \{s} WHERE user_id = \{id}");
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+            }
 
         }
 

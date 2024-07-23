@@ -105,7 +105,9 @@ public class Withdrow {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            new Request("SWAP",textfield.getText(),choiceBox1.getValue(),String.valueOf(from),choiceBox2.getValue(),String.valueOf(Double.valueOf(textfield.getText())*0.01)).toString();
+
+
+            cs.send(new Request("SWAP",textfield.getText(),choiceBox1.getValue().toLowerCase(),String.valueOf(from),choiceBox2.getValue().toLowerCase(),String.valueOf(Double.valueOf(textfield.getText())*0.01)).toString());
             finish=false;
             v.setText("معامله انجام شد به کیف پول برگردید");
         }
